@@ -9,6 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @interface SecondViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIImageView *photoImage;
+@property (weak, nonatomic) IBOutlet UILabel *photoTime;
+@property (weak, nonatomic) IBOutlet UIButton *updatePhoto;
 
 
 @end
