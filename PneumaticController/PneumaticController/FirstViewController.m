@@ -24,4 +24,9 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (IBAction)switchSocketPort:(id)sender {
+}
+
+- (IBAction)updatePressureValue:(id)sender {
+}
 @end

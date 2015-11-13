@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *photoTime;
 @property (weak, nonatomic) IBOutlet UIButton *updatePhoto;
 
+- (IBAction)updatePhotoDate:(id)sender;
 
 @end
 

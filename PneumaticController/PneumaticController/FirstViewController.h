@@ -16,5 +16,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *sendPresuressValueSlider;
 @property (weak, nonatomic) IBOutlet UISwitch *SocketControl;
 
+- (IBAction)switchSocketPort:(id)sender;
+- (IBAction)updatePressureValue:(id)sender;
 @end
 

@@ -41,10 +41,16 @@
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="50" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Oko-b1-GKf">
                                 <rect key="frame" x="95" y="262" width="207" height="31"/>
                                 <animations/>
+                                <connections>
+                                    <action selector="updatePressureValue:" destination="9pv-A4-QxB" eventType="valueChanged" id="xMi-mt-Tii"/>
+                                </connections>
                             </slider>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y7u-ef-03A">
                                 <rect key="frame" x="219" y="369" width="51" height="31"/>
                                 <animations/>
+                                <connections>
+                                    <action selector="switchSocketPort:" destination="9pv-A4-QxB" eventType="valueChanged" id="Cld-b1-qrt"/>
+                                </connections>
                             </switch>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EJS-1v-g15">
                                 <rect key="frame" x="80" y="196" width="161" height="21"/>
@@ -109,6 +115,9 @@
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="20"/>
                                 <state key="normal" title="立即更新"/>
+                                <connections>
+                                    <action selector="updatePhotoDate:" destination="8rJ-Kc-sve" eventType="touchUpInside" id="S00-PZ-CtX"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ld6-8u-Lvf">
                                 <rect key="frame" x="144" y="385" width="37" height="21"/>
@@ -134,6 +143,7 @@
                         <outlet property="photoImage" destination="Nhm-eu-s88" id="aqa-Pq-5MF"/>
                         <outlet property="photoTime" destination="Ld6-8u-Lvf" id="shM-LF-mJo"/>
                         <outlet property="updatePhoto" destination="U5J-Gr-RIE" id="hfP-lQ-OjP"/>
+                        <outlet property="updatePhotoNow" destination="U5J-Gr-RIE" id="QI1-2H-bj5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
