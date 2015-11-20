@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		27ADA3261BFED1180019B430 /* XTSHTTPController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ADA3251BFED1180019B430 /* XTSHTTPController.m */; };
 		27DCD7CC1BF5E0E700201075 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DCD7CB1BF5E0E700201075 /* main.m */; };
 		27DCD7CF1BF5E0E700201075 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DCD7CE1BF5E0E700201075 /* AppDelegate.m */; };
 		27DCD7D21BF5E0E700201075 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DCD7D11BF5E0E700201075 /* FirstViewController.m */; };
@@ -14,9 +15,13 @@
 		27DCD7D81BF5E0E700201075 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27DCD7D61BF5E0E700201075 /* Main.storyboard */; };
 		27DCD7DA1BF5E0E700201075 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27DCD7D91BF5E0E700201075 /* Assets.xcassets */; };
 		27DCD7DD1BF5E0E700201075 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27DCD7DB1BF5E0E700201075 /* LaunchScreen.storyboard */; };
+		27EBBBA41BF616950029C097 /* XTSSocketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EBBBA31BF616950029C097 /* XTSSocketController.m */; };
+		27EBBBA71BF622D60029C097 /* XTSDataPack.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EBBBA61BF622D60029C097 /* XTSDataPack.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		27ADA3241BFED1180019B430 /* XTSHTTPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSHTTPController.h; sourceTree = "<group>"; };
+		27ADA3251BFED1180019B430 /* XTSHTTPController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSHTTPController.m; sourceTree = "<group>"; };
 		27DCD7C71BF5E0E700201075 /* PneumaticController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PneumaticController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DCD7CB1BF5E0E700201075 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		27DCD7CD1BF5E0E700201075 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -29,6 +34,10 @@
 		27DCD7D91BF5E0E700201075 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		27DCD7DC1BF5E0E700201075 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		27DCD7DE1BF5E0E700201075 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27EBBBA21BF616950029C097 /* XTSSocketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSSocketController.h; sourceTree = "<group>"; };
+		27EBBBA31BF616950029C097 /* XTSSocketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSSocketController.m; sourceTree = "<group>"; };
+		27EBBBA51BF622D60029C097 /* XTSDataPack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSDataPack.h; sourceTree = "<group>"; };
+		27EBBBA61BF622D60029C097 /* XTSDataPack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSDataPack.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +80,12 @@
 				27DCD7D91BF5E0E700201075 /* Assets.xcassets */,
 				27DCD7DB1BF5E0E700201075 /* LaunchScreen.storyboard */,
 				27DCD7DE1BF5E0E700201075 /* Info.plist */,
+				27EBBBA21BF616950029C097 /* XTSSocketController.h */,
+				27EBBBA31BF616950029C097 /* XTSSocketController.m */,
+				27ADA3241BFED1180019B430 /* XTSHTTPController.h */,
+				27ADA3251BFED1180019B430 /* XTSHTTPController.m */,
+				27EBBBA51BF622D60029C097 /* XTSDataPack.h */,
+				27EBBBA61BF622D60029C097 /* XTSDataPack.m */,
 				27DCD7CA1BF5E0E700201075 /* Supporting Files */,
 			);
 			path = PneumaticController;
@@ -156,9 +171,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				27DCD7D51BF5E0E700201075 /* SecondViewController.m in Sources */,
+				27ADA3261BFED1180019B430 /* XTSHTTPController.m in Sources */,
 				27DCD7CF1BF5E0E700201075 /* AppDelegate.m in Sources */,
 				27DCD7D21BF5E0E700201075 /* FirstViewController.m in Sources */,
 				27DCD7CC1BF5E0E700201075 /* main.m in Sources */,
+				27EBBBA71BF622D60029C097 /* XTSDataPack.m in Sources */,
+				27EBBBA41BF616950029C097 /* XTSSocketController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -307,6 +325,7 @@
 				27DCD7E31BF5E0E700201075 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
