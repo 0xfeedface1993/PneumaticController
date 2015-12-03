@@ -53,7 +53,7 @@
     switch ([_SocketControl isOn]) {
         case YES:
             self.httper=[[XTSHTTPController alloc] init];
-            [_httper initWithHTTP];
+            [_httper initWithPOST];
             break;
         case NO:
             self.httper=nil;
@@ -63,9 +63,6 @@
     }
 }
 
--(void)streamEventErrorOccurredAction:(NSError *)error{
-    
-}
 
 - (IBAction)updatePressureValue:(id)sender {
     float sliderValue;

@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-@interface XTSHTTPController : NSObject<NSURLSessionTaskDelegate>
+@interface XTSHTTPController : NSObject<NSURLSessionDataDelegate>
 @property (nonatomic, assign) int flag;
 //@property (weak, nonatomic) id<XTSSocketControllerStreamEventErrorOccurredDelegate> errorDelegate;
 @property (strong, nonatomic) NSString *  Host_IP;
@@ -17,6 +18,10 @@
 @property (strong, nonatomic) NSURLConnection *connection;
 @property (strong, nonatomic) NSURLSession *urlSession;
 @property (nonatomic, strong) NSURLSessionDataTask *sessionDataTask;
+@property (strong, nonatomic) NSString *imageURL;
+//@property (nonatomic, copy) void (^myBlock)(NSData *data, NSURLResponse *response, NSError *error);
 
 -(void)initWithHTTP;
+-(void)initWithPOST;
+-(void)initWithJPG;
 @end

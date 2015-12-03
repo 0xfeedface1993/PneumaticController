@@ -7,7 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		276D09101C06ABAF004921C0 /* IMG_0035.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 276D090F1C06ABAF004921C0 /* IMG_0035.jpg */; };
+		276D09131C06B11B004921C0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 276D09121C06B11B004921C0 /* MBProgressHUD.m */; };
 		27ADA3261BFED1180019B430 /* XTSHTTPController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ADA3251BFED1180019B430 /* XTSHTTPController.m */; };
+		27ADA3281BFF097D0019B430 /* photo.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 27ADA3271BFF097D0019B430 /* photo.jpeg */; };
+		27DB8E911C03E66A00752823 /* StateMonitorTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8E901C03E66A00752823 /* StateMonitorTableViewController.m */; };
+		27DB8E941C03E89700752823 /* StateMonitorList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27DB8E931C03E89700752823 /* StateMonitorList.plist */; };
+		27DB8E971C03ECEC00752823 /* managedObjectConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8E961C03ECEC00752823 /* managedObjectConfiguration.m */; };
 		27DCD7CC1BF5E0E700201075 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DCD7CB1BF5E0E700201075 /* main.m */; };
 		27DCD7CF1BF5E0E700201075 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DCD7CE1BF5E0E700201075 /* AppDelegate.m */; };
 		27DCD7D21BF5E0E700201075 /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DCD7D11BF5E0E700201075 /* FirstViewController.m */; };
@@ -17,11 +23,26 @@
 		27DCD7DD1BF5E0E700201075 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27DCD7DB1BF5E0E700201075 /* LaunchScreen.storyboard */; };
 		27EBBBA41BF616950029C097 /* XTSSocketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EBBBA31BF616950029C097 /* XTSSocketController.m */; };
 		27EBBBA71BF622D60029C097 /* XTSDataPack.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EBBBA61BF622D60029C097 /* XTSDataPack.m */; };
+		27F5A60F1C05A8D200BD4C61 /* XTSInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F5A60E1C05A8D200BD4C61 /* XTSInfoCell.m */; };
+		27F5A6121C05AC4B00BD4C61 /* UpDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 27F5A6101C05AC4B00BD4C61 /* UpDataModel.xcdatamodeld */; };
+		27F5A6151C05CDFD00BD4C61 /* XTSStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F5A6141C05CDFD00BD4C61 /* XTSStateCell.m */; };
+		27F5A6171C05CFE400BD4C61 /* 红色按钮.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 27F5A6161C05CFE400BD4C61 /* 红色按钮.jpg */; };
+		27F5A6191C05D07400BD4C61 /* 黑色按钮.png in Resources */ = {isa = PBXBuildFile; fileRef = 27F5A6181C05D07400BD4C61 /* 黑色按钮.png */; };
+		27F5A61C1C05E06F00BD4C61 /* ModifyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F5A61B1C05E06F00BD4C61 /* ModifyViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		276D090F1C06ABAF004921C0 /* IMG_0035.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0035.jpg; sourceTree = "<group>"; };
+		276D09111C06B11B004921C0 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		276D09121C06B11B004921C0 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		27ADA3241BFED1180019B430 /* XTSHTTPController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSHTTPController.h; sourceTree = "<group>"; };
 		27ADA3251BFED1180019B430 /* XTSHTTPController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSHTTPController.m; sourceTree = "<group>"; };
+		27ADA3271BFF097D0019B430 /* photo.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = photo.jpeg; sourceTree = "<group>"; };
+		27DB8E8F1C03E66A00752823 /* StateMonitorTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StateMonitorTableViewController.h; sourceTree = "<group>"; };
+		27DB8E901C03E66A00752823 /* StateMonitorTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StateMonitorTableViewController.m; sourceTree = "<group>"; };
+		27DB8E931C03E89700752823 /* StateMonitorList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = StateMonitorList.plist; sourceTree = "<group>"; };
+		27DB8E951C03ECEC00752823 /* managedObjectConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = managedObjectConfiguration.h; sourceTree = "<group>"; };
+		27DB8E961C03ECEC00752823 /* managedObjectConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = managedObjectConfiguration.m; sourceTree = "<group>"; };
 		27DCD7C71BF5E0E700201075 /* PneumaticController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PneumaticController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DCD7CB1BF5E0E700201075 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		27DCD7CD1BF5E0E700201075 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -38,6 +59,15 @@
 		27EBBBA31BF616950029C097 /* XTSSocketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSSocketController.m; sourceTree = "<group>"; };
 		27EBBBA51BF622D60029C097 /* XTSDataPack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSDataPack.h; sourceTree = "<group>"; };
 		27EBBBA61BF622D60029C097 /* XTSDataPack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSDataPack.m; sourceTree = "<group>"; };
+		27F5A60D1C05A8D200BD4C61 /* XTSInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSInfoCell.h; sourceTree = "<group>"; };
+		27F5A60E1C05A8D200BD4C61 /* XTSInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSInfoCell.m; sourceTree = "<group>"; };
+		27F5A6111C05AC4B00BD4C61 /* UpDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UpDataModel.xcdatamodel; sourceTree = "<group>"; };
+		27F5A6131C05CDFD00BD4C61 /* XTSStateCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSStateCell.h; sourceTree = "<group>"; };
+		27F5A6141C05CDFD00BD4C61 /* XTSStateCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSStateCell.m; sourceTree = "<group>"; };
+		27F5A6161C05CFE400BD4C61 /* 红色按钮.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "红色按钮.jpg"; sourceTree = "<group>"; };
+		27F5A6181C05D07400BD4C61 /* 黑色按钮.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "黑色按钮.png"; sourceTree = "<group>"; };
+		27F5A61A1C05E06F00BD4C61 /* ModifyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyViewController.h; sourceTree = "<group>"; };
+		27F5A61B1C05E06F00BD4C61 /* ModifyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModifyViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +84,7 @@
 		27DCD7BE1BF5E0E700201075 = {
 			isa = PBXGroup;
 			children = (
+				27DB8E931C03E89700752823 /* StateMonitorList.plist */,
 				27DCD7C91BF5E0E700201075 /* PneumaticController */,
 				27DCD7C81BF5E0E700201075 /* Products */,
 			);
@@ -70,13 +101,27 @@
 		27DCD7C91BF5E0E700201075 /* PneumaticController */ = {
 			isa = PBXGroup;
 			children = (
+				276D09111C06B11B004921C0 /* MBProgressHUD.h */,
+				276D09121C06B11B004921C0 /* MBProgressHUD.m */,
 				27DCD7CD1BF5E0E700201075 /* AppDelegate.h */,
+				27ADA3271BFF097D0019B430 /* photo.jpeg */,
 				27DCD7CE1BF5E0E700201075 /* AppDelegate.m */,
 				27DCD7D01BF5E0E700201075 /* FirstViewController.h */,
 				27DCD7D11BF5E0E700201075 /* FirstViewController.m */,
 				27DCD7D31BF5E0E700201075 /* SecondViewController.h */,
 				27DCD7D41BF5E0E700201075 /* SecondViewController.m */,
 				27DCD7D61BF5E0E700201075 /* Main.storyboard */,
+				27F5A61A1C05E06F00BD4C61 /* ModifyViewController.h */,
+				27F5A61B1C05E06F00BD4C61 /* ModifyViewController.m */,
+				27DB8E8F1C03E66A00752823 /* StateMonitorTableViewController.h */,
+				27DB8E901C03E66A00752823 /* StateMonitorTableViewController.m */,
+				27F5A6101C05AC4B00BD4C61 /* UpDataModel.xcdatamodeld */,
+				27F5A6131C05CDFD00BD4C61 /* XTSStateCell.h */,
+				27F5A6141C05CDFD00BD4C61 /* XTSStateCell.m */,
+				27F5A60D1C05A8D200BD4C61 /* XTSInfoCell.h */,
+				27F5A60E1C05A8D200BD4C61 /* XTSInfoCell.m */,
+				27DB8E951C03ECEC00752823 /* managedObjectConfiguration.h */,
+				27DB8E961C03ECEC00752823 /* managedObjectConfiguration.m */,
 				27DCD7D91BF5E0E700201075 /* Assets.xcassets */,
 				27DCD7DB1BF5E0E700201075 /* LaunchScreen.storyboard */,
 				27DCD7DE1BF5E0E700201075 /* Info.plist */,
@@ -94,6 +139,9 @@
 		27DCD7CA1BF5E0E700201075 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				276D090F1C06ABAF004921C0 /* IMG_0035.jpg */,
+				27F5A6181C05D07400BD4C61 /* 黑色按钮.png */,
+				27F5A6161C05CFE400BD4C61 /* 红色按钮.jpg */,
 				27DCD7CB1BF5E0E700201075 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -157,9 +205,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27F5A6171C05CFE400BD4C61 /* 红色按钮.jpg in Resources */,
+				27ADA3281BFF097D0019B430 /* photo.jpeg in Resources */,
 				27DCD7DD1BF5E0E700201075 /* LaunchScreen.storyboard in Resources */,
 				27DCD7DA1BF5E0E700201075 /* Assets.xcassets in Resources */,
 				27DCD7D81BF5E0E700201075 /* Main.storyboard in Resources */,
+				27F5A6191C05D07400BD4C61 /* 黑色按钮.png in Resources */,
+				27DB8E941C03E89700752823 /* StateMonitorList.plist in Resources */,
+				276D09101C06ABAF004921C0 /* IMG_0035.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -170,13 +223,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				27F5A61C1C05E06F00BD4C61 /* ModifyViewController.m in Sources */,
+				27F5A6151C05CDFD00BD4C61 /* XTSStateCell.m in Sources */,
 				27DCD7D51BF5E0E700201075 /* SecondViewController.m in Sources */,
+				27F5A6121C05AC4B00BD4C61 /* UpDataModel.xcdatamodeld in Sources */,
 				27ADA3261BFED1180019B430 /* XTSHTTPController.m in Sources */,
 				27DCD7CF1BF5E0E700201075 /* AppDelegate.m in Sources */,
+				27DB8E971C03ECEC00752823 /* managedObjectConfiguration.m in Sources */,
 				27DCD7D21BF5E0E700201075 /* FirstViewController.m in Sources */,
+				27DB8E911C03E66A00752823 /* StateMonitorTableViewController.m in Sources */,
 				27DCD7CC1BF5E0E700201075 /* main.m in Sources */,
+				27F5A60F1C05A8D200BD4C61 /* XTSInfoCell.m in Sources */,
 				27EBBBA71BF622D60029C097 /* XTSDataPack.m in Sources */,
 				27EBBBA41BF616950029C097 /* XTSSocketController.m in Sources */,
+				276D09131C06B11B004921C0 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +348,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PneumaticController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -300,6 +361,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PneumaticController/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -328,6 +390,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		27F5A6101C05AC4B00BD4C61 /* UpDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				27F5A6111C05AC4B00BD4C61 /* UpDataModel.xcdatamodel */,
+			);
+			currentVersion = 27F5A6111C05AC4B00BD4C61 /* UpDataModel.xcdatamodel */;
+			path = UpDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 27DCD7BF1BF5E0E700201075 /* Project object */;
 }

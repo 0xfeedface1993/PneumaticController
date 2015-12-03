@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Xcode 7.0">
+    <entity name="Recive" syncable="YES">
+        <attribute name="changerate" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="electromagnet" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="highpressurevalve" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="lowpressurevalve" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="pressure" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="runtime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="stablevalve" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="systemtime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="temperature" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="vacuumpump" optional="YES" attributeType="Boolean" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Recive" positionX="-63" positionY="-18" width="128" height="195"/>
+    </elements>
+</model>
