@@ -8,7 +8,7 @@
 
 #import "XTSInfoCell.h"
 
-#define kLabelTextColor [UIColor colorWithRed:1.0f green:0.1f blue:0.2f alpha:0.8f]
+
 
 @implementation XTSInfoCell
 
@@ -30,7 +30,7 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         // TODO - use Auto Layout to adjust sizes
-        self.label = [[UILabel alloc] initWithFrame:CGRectMake(200.0, 15.0, 67.0, 15.0)];
+        self.label = [[UILabel alloc] initWithFrame:CGRectMake(150.0, 15.0, 90.0, 15.0)];
         self.label.backgroundColor = [UIColor clearColor];
         self.label.font = [UIFont boldSystemFontOfSize:15];
         self.label.textAlignment = NSTextAlignmentRight;

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 
+#define kLabelTextColor [UIColor colorWithRed:1.0f green:0.1f blue:0.2f alpha:0.8f]
+
 @interface XTSInfoCell : UITableViewCell
 
 @property (strong, nonatomic) UILabel *label;

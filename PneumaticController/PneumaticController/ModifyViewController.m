@@ -7,12 +7,27 @@
 //
 
 #import "ModifyViewController.h"
+//#import "AutoModeViewController.h"
+#import "XTSSocketController.h"
 
+//  要请求修改的类型，根据所需项目增减
+//
+enum XTSModifyType{
+    XTSModifyFirst=1,
+    XTSModifySecond,
+    XTSModifyThird,
+    XTSModifyFour,
+    XTSModifyFive,
+    XTSModifySix,
+    XTSModifySeven,
+}modifyType;
+
+@class AutoModeViewController;
 
 @interface ModifyViewController (){
     MBProgressHUD *HUD; //菊花
 }
-
+@property (nonatomic,strong) XTSSocketController *socker;
 @end
 
 @implementation ModifyViewController
@@ -26,6 +41,8 @@
                    action:@selector(buttonPress:)
          forControlEvents:UIControlEventTouchUpInside];
     }
+    
+    NSLog(@"w:%f,h:%f",self.view.bounds.size.width,self.view.bounds.size.height);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -46,11 +63,12 @@
     
     switch (tag) {
         case XTSModifyFirst:
-            title=@"平原表（800）检定";
+            title=@"升压";
             break;
         case XTSModifySecond:
-            title=@"高原表（500）检定";
+            title=@"降压";
             break;
+            /*
         case XTSModifyThird:
             title=@"气压计检定";
             break;
@@ -66,6 +84,7 @@
         case XTSModifySeven:
             title=@"振筒自动检定";
             break;
+             */
         default:
             
             break;
@@ -89,6 +108,7 @@
                 HUD.delegate = self;
                 HUD.labelText = @"正在设置";
                 HUD.dimBackground = YES;
+                //NSDictionary *inputDictionary=[NSDictionary dictionaryWithObjectsAndKeys:, nil];
                 [HUD showWhileExecuting:@selector(sendData2Server:) onTarget:self withObject:label.text animated:YES];
                 
             }
@@ -110,15 +130,17 @@
     
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    //AutoModeViewController *autoModeController=(AutoModeViewController *)segue.destinationViewController;
+    //autoModeController.modifyControllerx=self;
 }
-*/
+
 
 #pragma mark - Connect Function
 
@@ -130,6 +152,37 @@
     [NSThread sleepForTimeInterval:3];
     //[MBProgressHUD hideHUDForView:self.view animated:YES];
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"GOOD" object:nil];
+    /*
+    XTSSocketController *soketer=[[XTSSocketController alloc] init];
+    soketer.flag=1;
+    NSNumber *pressure=[[NSNumber alloc] initWithFloat:105.0];
+    NSNumber *timeout=[[NSNumber alloc] initWithChar:5];
+    NSDictionary *keysAndValues;//=[NSDictionary dictionaryWithObjectsAndKeys:pressure,@"pressure",timeout,@"timeout", nil];
+    XTSDataMode mode=XTSDataManuelMode;
+    
+    switch (mode) {
+        case XTSDataManuelMode:
+            keysAndValues=[NSDictionary dictionaryWithObjectsAndKeys:pressure,@"pressure",timeout,@"timeout", nil];
+            break;
+        case XTSDataAutoMode:
+            
+            break;
+        default:
+            break;
+    }
+    
+    //NSMutableData *sendeData=[[NSData alloc] init];
+    //soketer.sendData=sendeData;
+    //soketer.errorDelegate=self;
+    self.socker=soketer;
+    [self.socker initNetworkCommunication:keysAndValues hostIP:HOST_IP];
+    if (![self.socker sendDataWithMode:mode dataPack:keysAndValues]) {
+        NSLog(@"send data failed!");
+    }else{
+        //[self.tableView reloadData];
+        self.labels
+    }*/
+
 }
 
 @end

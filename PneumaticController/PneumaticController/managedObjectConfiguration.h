@@ -9,7 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@interface managedObjectConfiguration : NSObject
+#import "managedObjectViewController.h"
+
+@interface managedObjectConfiguration : managedObjectViewController
 -(NSInteger)numberOfSections;
 -(NSInteger)numberOfRowsInSection:(NSInteger)section;
 -(NSString *)headerInSection:(NSInteger)section;

@@ -9,33 +9,55 @@
 #import <Foundation/Foundation.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#import "XTSDataPack.h"
+//#import "XTSDataPack.h"
 
 #define PORT 9600
 
 #define SEND 1
 #define RECV 0
 
+static NSString *HOST_IP=@"10.88.132.125";
+
+typedef NS_ENUM(NSInteger,XTSDataMode){
+  XTSDataAutoMode,
+  XTSDataManuelMode,
+  XTSDataStateRequireMode
+};
+
 @protocol XTSSocketControllerStreamEventErrorOccurredDelegate <NSObject>
 
--(void)streamEventErrorOccurredAction:(NSError *)error;
+-(void)streamEventErrorOccurredAction:(NSError *)error type:(NSString *)type;
+-(void)streamEventOpenSucces;
+-(void)streamEventClose;
 
 @end
+
+@protocol XTSSocketControllerStreamEventDataProcessDelegate <NSObject>
+-(void)streamDataRecvSuccess:(NSData *)data;
+@end
+
 
 @interface XTSSocketController : NSObject<NSStreamDelegate>
 
 @property (nonatomic, assign) int flag;
 @property (weak, nonatomic) id<XTSSocketControllerStreamEventErrorOccurredDelegate> errorDelegate;
+@property (weak, nonatomic) id<XTSSocketControllerStreamEventDataProcessDelegate> dataDelegate;
 @property (strong, nonatomic) NSInputStream *inputStream;
 @property (strong, nonatomic) NSOutputStream *outputStream;
 @property (strong, nonatomic) NSString *  Host_IP;
 @property (strong, nonatomic) NSMutableData *recverData;
-@property (strong, nonatomic) XTSDataPack *sendData;
+@property (strong, nonatomic) NSMutableData *sendData;
 
--(void)initNetworkCommunication:(NSData *)data hostIP:(NSString * )hostIP;
+-(void)initNetworkCommunication:(NSDictionary *)data hostIP:(NSString * )hostIP;
+-(BOOL)sendDataWithMode:(XTSDataMode)mode dataPack:(NSDictionary *)data;
+-(BOOL)getInfomation;
+
+-(NSDictionary *)packSendData:(id)data WithMode:(XTSDataMode)mode;
 
 -(void)close;
 -(void)open;
+
+
 
 @end
 

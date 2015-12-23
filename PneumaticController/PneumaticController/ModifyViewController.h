@@ -11,17 +11,7 @@
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
 
-//  要请求修改的类型，根据所需项目增减
-//
-enum XTSModifyType{
-    XTSModifyFirst=1,
-    XTSModifySecond,
-    XTSModifyThird,
-    XTSModifyFour,
-    XTSModifyFive,
-    XTSModifySix,
-    XTSModifySeven,
-}modifyType;
+
 
 @interface ModifyViewController : UIViewController<MBProgressHUDDelegate>
 

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>sections</key>
+	<array>
+		<dict>
+			<key>header</key>
+			<string>设定序列</string>
+			<key>rows</key>
+			<array>
+				<dict>
+					<key>key</key>
+					<string>set</string>
+					<key>class</key>
+					<string>XTSAutoSetCell</string>
+					<key>label</key>
+					<string></string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+</dict>
+</plist>

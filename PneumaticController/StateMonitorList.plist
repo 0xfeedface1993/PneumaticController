@@ -82,6 +82,22 @@
 					<key>label</key>
 					<string>电磁铁</string>
 				</dict>
+				<dict>
+					<key>key</key>
+					<string>stablevalvetimeout</string>
+					<key>class</key>
+					<string>XTSStateCell</string>
+					<key>label</key>
+					<string>保压时间是否到</string>
+				</dict>
+				<dict>
+					<key>key</key>
+					<string>usb</string>
+					<key>class</key>
+					<string>XTSStateCell</string>
+					<key>label</key>
+					<string>串口状态</string>
+				</dict>
 			</array>
 		</dict>
 	</array>

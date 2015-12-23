@@ -1,18 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9057" systemVersion="15B42" minimumToolsVersion="Xcode 7.0">
-    <entity name="Recive" syncable="YES">
-        <attribute name="changerate" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="15C50" minimumToolsVersion="Xcode 7.0">
+    <entity name="ModeSet" syncable="YES">
+        <attribute name="number" attributeType="Integer 32" indexed="YES" syncable="YES"/>
+        <attribute name="pressure" attributeType="Float" syncable="YES"/>
+        <attribute name="time" attributeType="Integer 16" syncable="YES"/>
+    </entity>
+    <entity name="PhotoTime" syncable="YES">
+        <attribute name="imageJPG" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="shotmoment" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Recive" representedClassName="Recive" syncable="YES">
+        <attribute name="changerate" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="electromagnet" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="highpressurevalve" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lowpressurevalve" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="pressure" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="pressure" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="runtime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="stablevalve" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="stablevalvetimeout" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="systemtime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="temperature" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="temperature" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="usb" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="vacuumpump" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Recive" positionX="-63" positionY="-18" width="128" height="195"/>
+        <element name="ModeSet" positionX="-63" positionY="54" width="128" height="90"/>
+        <element name="Recive" positionX="-63" positionY="-18" width="128" height="225"/>
+        <element name="PhotoTime" positionX="-63" positionY="72" width="128" height="75"/>
     </elements>
 </model>

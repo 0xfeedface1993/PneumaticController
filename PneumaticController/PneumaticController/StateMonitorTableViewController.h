@@ -9,15 +9,15 @@
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import "MBProgressHUD.h"
+#import "managedObjectViewController.h"
+#import "XTSSocketController.h"
+
+#define kIPAdressKey @"ip"
+
+
 
 @class managedObjectConfiguration;
 
-@interface StateMonitorTableViewController : UITableViewController<UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate>
-
-@property (strong, nonatomic) managedObjectConfiguration *config;
-@property (strong, nonatomic) NSManagedObject *managedObject;
-
--(void)save;
--(void)cancel;
+@interface StateMonitorTableViewController : managedObjectViewController<UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate,XTSSocketControllerStreamEventErrorOccurredDelegate,XTSSocketControllerStreamEventDataProcessDelegate>
 
 @end
