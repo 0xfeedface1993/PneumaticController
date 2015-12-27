@@ -8,8 +8,12 @@
 
 #import "SecondViewController.h"
 #import "XTSHTTPController.h"
+#define kIPAdressKey @"ip"
+
 @interface SecondViewController ()
-@property (strong, nonatomic) XTSHTTPController *httper;
+@property (strong, nonatomic) XTSSocketController *socket;
+@property (strong, nonatomic) UIImage *image;
+@property (strong, nonatomic) UIImage *defaultImage;
 @end
 
 @implementation SecondViewController
@@ -33,12 +37,12 @@
 }
 
 #pragma mark - IBAction
-
+/*
 - (IBAction)updatePhotoDate:(id)sender {
     //self.httper=[[XTSHTTPController alloc] init];
     //[_httper initWithJPG];
     
     
     //[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.httper.imageURL]]];//@"http://10.88.132.160:5000/static/0.jpg"IMG_0035.jpg
-}
+}*/
 @end

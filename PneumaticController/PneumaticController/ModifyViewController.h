@@ -10,10 +10,9 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "XTSSocketController.h"
 
-
-
-@interface ModifyViewController : UIViewController<MBProgressHUDDelegate>
+@interface ModifyViewController : UIViewController<MBProgressHUDDelegate,XTSSocketControllerStreamEventDataProcessDelegate,XTSSocketControllerStreamEventErrorOccurredDelegate>
 
 //修改按钮集合
 @property (strong,nonatomic) IBOutletCollection(UIButton) NSArray *modifyButtons;

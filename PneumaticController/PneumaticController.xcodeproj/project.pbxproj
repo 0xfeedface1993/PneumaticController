@@ -115,7 +115,6 @@
 				276D09111C06B11B004921C0 /* MBProgressHUD.h */,
 				276D09121C06B11B004921C0 /* MBProgressHUD.m */,
 				27DCD7CD1BF5E0E700201075 /* AppDelegate.h */,
-				27ADA3271BFF097D0019B430 /* photo.jpeg */,
 				27DCD7CE1BF5E0E700201075 /* AppDelegate.m */,
 				27DCD7D31BF5E0E700201075 /* SecondViewController.h */,
 				27DCD7D41BF5E0E700201075 /* SecondViewController.m */,
@@ -152,6 +151,7 @@
 		27DCD7CA1BF5E0E700201075 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				27ADA3271BFF097D0019B430 /* photo.jpeg */,
 				276D090F1C06ABAF004921C0 /* IMG_0035.jpg */,
 				27F5A6181C05D07400BD4C61 /* 黑色按钮.png */,
 				27F5A6161C05CFE400BD4C61 /* 红色按钮.jpg */,

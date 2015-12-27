@@ -10,6 +10,7 @@
 //#import "AutoModeViewController.h"
 #import "XTSSocketController.h"
 
+#define kIPAdressKey @"ip"
 //  要请求修改的类型，根据所需项目增减
 //
 enum XTSModifyType{
@@ -109,7 +110,9 @@ enum XTSModifyType{
                 HUD.labelText = @"正在设置";
                 HUD.dimBackground = YES;
                 //NSDictionary *inputDictionary=[NSDictionary dictionaryWithObjectsAndKeys:, nil];
-                [HUD showWhileExecuting:@selector(sendData2Server:) onTarget:self withObject:label.text animated:YES];
+                //[HUD showWhileExecuting:@selector(sendData2Server:) onTarget:self withObject:label.text animated:YES];
+                [HUD show:YES];
+                [self sendData2Server:label.text];
                 
             }
         }
@@ -146,43 +149,66 @@ enum XTSModifyType{
 
 -(void)sendData2Server:(NSString *)text{
     NSLog(@"%@\n",text);
-    //hud=[MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    //hud.mode=MBProgressHUDAnimationZoom;//枚举类型不同的效果
-    //hud.labelText=@"修改中";
-    [NSThread sleepForTimeInterval:3];
-    //[MBProgressHUD hideHUDForView:self.view animated:YES];
-    //[[NSNotificationCenter defaultCenter] removeObserver:self name:@"GOOD" object:nil];
-    /*
-    XTSSocketController *soketer=[[XTSSocketController alloc] init];
-    soketer.flag=1;
-    NSNumber *pressure=[[NSNumber alloc] initWithFloat:105.0];
+    //[NSThread sleepForTimeInterval:3];
+    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
+    NSString *ip=[userDefaults valueForKey:kIPAdressKey];
+    NSNumber *pressure=[[NSNumber alloc] initWithFloat:[text floatValue]];
     NSNumber *timeout=[[NSNumber alloc] initWithChar:5];
-    NSDictionary *keysAndValues;//=[NSDictionary dictionaryWithObjectsAndKeys:pressure,@"pressure",timeout,@"timeout", nil];
+    NSDictionary *keysAndValues;
+    
+    XTSSocketController *soketer=[[XTSSocketController alloc] init];
     XTSDataMode mode=XTSDataManuelMode;
-    
-    switch (mode) {
-        case XTSDataManuelMode:
-            keysAndValues=[NSDictionary dictionaryWithObjectsAndKeys:pressure,@"pressure",timeout,@"timeout", nil];
-            break;
-        case XTSDataAutoMode:
-            
-            break;
-        default:
-            break;
-    }
-    
-    //NSMutableData *sendeData=[[NSData alloc] init];
-    //soketer.sendData=sendeData;
-    //soketer.errorDelegate=self;
+    keysAndValues=[NSDictionary dictionaryWithObjectsAndKeys:pressure,@"pressure",timeout,@"timeout", nil];
+    soketer.errorDelegate=self;
+    soketer.dataDelegate=self;
     self.socker=soketer;
-    [self.socker initNetworkCommunication:keysAndValues hostIP:HOST_IP];
+    [self.socker initNetworkCommunication:keysAndValues hostIP:ip];
+    //soketer.flag=1;
     if (![self.socker sendDataWithMode:mode dataPack:keysAndValues]) {
         NSLog(@"send data failed!");
     }else{
         //[self.tableView reloadData];
-        self.labels
-    }*/
+        //self.labels
+         //[HUD hide:YES];
+    }
 
+}
+
+
+#pragma mark - StreamEventErrorOccurred Delegate
+
+-(void)streamEventErrorOccurredAction:(NSError *)error type:(NSString *)type{
+    //NSLog(@"ErrorOccurred :%@ ,type: %@",[error localizedDescription],type);
+    if ([type isEqualToString:@"NetEventConnectOverTime"]) {
+        UIAlertController *alertView=[UIAlertController alertControllerWithTitle:@"连接服务器超时" message:@"请检查你的网络和服务器ip" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            //[self.refreshControl endRefreshing];
+        }];
+        [alertView addAction:okAction];
+        [self presentViewController:alertView animated:YES completion:nil];
+        [HUD hide:YES];
+    }
+    //[self.refreshControl endRefreshing];
+}
+
+-(void)streamEventOpenSucces{
+    NSLog(@"Stream Open Succes！");
+}
+
+-(void)streamEventClose{
+    NSLog(@"Stream Close！");
+    //[self.refreshControl endRefreshing];
+    [HUD hide:YES];
+}
+
+#pragma mark - StreamEventDataProcess Delegate
+
+-(void)streamDataRecvSuccess:(NSData *)data{
+    NSError *error_check_json;
+    NSDictionary *revData=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error_check_json];
+    NSDictionary *state=[revData objectForKey:@"state"];
+    //NSManagedObject *object=[[self.fetchedResultController fetchedObjects] lastObject];
+    
 }
 
 @end
