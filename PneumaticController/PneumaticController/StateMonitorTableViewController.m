@@ -1,7 +1,7 @@
 //
 //  StateMonitorTableViewController.m
 //  PneumaticController
-//
+//  
 //  Created by virus1993 on 15/11/24.
 //  Copyright © 2015年 virus1993. All rights reserved.
 //
@@ -47,7 +47,7 @@
 //@property (nonatomic,strong) ;
 @property (nonatomic, strong, readonly) NSFetchedResultsController *fetchedResultController;
 @property (nonatomic,strong) XTSSocketController *socketer;
-@property (nonatomic, strong) NSDictionary *nameZonePair;
+@property (nonatomic, strong) NSDictionary *nameZonePair;//数据库键名和josn键名对应关系
 @end
 
 @implementation StateMonitorTableViewController
@@ -61,14 +61,21 @@
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    // 由plist来确定每个cell的类型
     self.config=[[managedObjectConfiguration alloc] initWithResource:@"StateMonitorList"];
     self.navigationItem.title=@"未连接";
+    
+    // 导航栏左键为修改服务器ip，右键为更新按钮
     self.navigationItem.rightBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh target:self action:@selector(refreshState)];
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(changeServer)];
+    
+    // 下拉更新控件
     self.refreshControl=[[UIRefreshControl alloc] init];
     self.refreshControl.attributedTitle = [[NSAttributedString alloc] initWithString:@"下拉刷新……"];
     self.refreshControl.tintColor = [UIColor grayColor];
     [self.refreshControl addTarget:self action:@selector(refreshState) forControlEvents:UIControlEventValueChanged];
+    
+    // 先从数据库读取最近一次状态，如果没有状态，在数据库添加一个新的状态实例
     NSError *error;
     [self.fetchedResultController performFetch:&error];
     if ([[self.fetchedResultController fetchedObjects] count]==0) {
@@ -82,9 +89,15 @@
             
         }
     }
+    
+    //将服务器的josn键名和本地数据库联系起来
     [self setSocketJOSNKeyAndCoreDataKeyPair];
 }
 
+/*
+ 数据库键名最好是固定的，所以需要建立与josn键名的关系，即使josn键名改变也可进行较小的修改
+ 另外，解析的时候更方便进行键值存储
+ */
 -(void)setSocketJOSNKeyAndCoreDataKeyPair{
     NSArray *XTSNames=[NSArray arrayWithObjects://XTSStateChangerate,
                                                 XTSStateElectromagnet,
@@ -112,6 +125,12 @@
     self.nameZonePair=nameZonePair;
 }
 
+/*
+ fetchedResultController的getter方法，从数据库中读取我们需要的实体需要以下几个步骤（这里要取的是状态数据，也就是Recive实体）：
+ 1.获得数据库托管上下文 （NSManagedObjectContext），并设置获取请求（NSFetchRequest），不过要为它提供一个 NSEntityDescription，指定希望检索名为“Recive”的多个对象实体。还需要 NSSortDescriptor 提供检索结果的排序，这里我们用压力变化速率来排序，我们当前并不需要排序，只是使用过程需要这个参数
+ 2.调用initWithFetchRequest:managedObjectContext:sectionNameKeyPath:cacheName:方法进行检索
+ 
+ */
 -(NSFetchedResultsController *)fetchedResultController{
     if (_fetchedResultController != nil) {
         return _fetchedResultController;
@@ -148,6 +167,15 @@
     return _fetchedResultController;
 }
 
+/*
+ 更新状态显示。需要使用socket传输数据，但是服务器ip必须不为空，更新步骤如下：
+ 1.检查是否ip为空，空着提示出错后面的代码不执行
+ 2.实例化socket，设置上传数据模式为请求数据模式，不需要我们准备数据，因为任何时候请求数据没有任何区别。
+ 3.发送数据
+ 4.等待数据回传
+ 5.解析回传数据，存入数据库，更新显示
+ 这个方法完成的是发送请求数据，回传数据的解析由代理协议XTSSocketControllerStreamEventDataProcessDelegate完成，也就是步骤4、5
+ */
 -(void)refreshState{
     //NSLog(@"%lu",[[self.fetchedResultController fetchedObjects] count]);
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
@@ -201,7 +229,9 @@
     //[self.refreshControl endRefreshing];
 }
 
-
+/*
+ 测试用例
+ */
 -(BOOL)initDefaultsState{
     NSManagedObject *stateObject=[self.fetchedResultController.fetchedObjects lastObject];
     
@@ -242,7 +272,9 @@
     // Dispose of any resources that can be recreated.
 }
 
-
+/*
+ 变更ip方法。通过警告视图中的文本框获得用户指定的ip值，存入NSUserDefaults
+ */
 
 -(void)changeServer{
     
@@ -334,6 +366,10 @@
  return YES;
  }
  */
+
+/*
+ 我们需要重载表视图的cell的更新方法，父类原来的方法还是要执行的，要修改的是右侧启动状态文字和模块指示灯的显示，因为除了模块指示灯类的cell才有知识灯显示。
+ */
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     XTSStateCell *cell=[super tableView:tableView cellForRowAtIndexPath:indexPath];
     
@@ -389,6 +425,7 @@
 
 -(void)streamEventErrorOccurredAction:(NSError *)error type:(NSString *)type{
      //NSLog(@"ErrorOccurred :%@ ,type: %@",[error localizedDescription],type);
+    //连接超时
     if ([type isEqualToString:@"NetEventConnectOverTime"]) {
         UIAlertController *alertView=[UIAlertController alertControllerWithTitle:@"连接服务器超时" message:@"请检查你的网络和服务器ip" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
@@ -410,7 +447,13 @@
 }
 
 #pragma mark - StreamEventDataProcess Delegate
-
+/*
+ 接受到的数据是josn数据，所以需要转换成字典才更好的操作
+ 1.josn数据转换成字典
+ 2.将状态数据写入数据库，利用键值对，键名关系我们在之前已经确定
+ 3.一旦保压时间到，就用警告视图提示
+ 4.更新视图
+ */
 -(void)streamDataRecvSuccess:(NSData *)data{
     NSError *error_check_json;
     NSDictionary *revData=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error_check_json];
@@ -438,6 +481,7 @@
         }];
         [alertView addAction:okAction];
         [self presentViewController:alertView animated:YES completion:nil];
+        
     }
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];

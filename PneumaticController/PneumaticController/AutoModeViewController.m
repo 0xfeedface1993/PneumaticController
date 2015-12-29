@@ -34,18 +34,19 @@ enum TextFieldType{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //self.config=[[managedObjectConfiguration alloc] initWithResource:@"AutoModeTableList"];
-    self.navigationItem.title=@"未连接";
+    //添加返回、上传、添加按钮
     self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone  target:self action:@selector(backModeView)];
     UIBarButtonItem *itemAdd=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addSerilSet)];
     UIBarButtonItem *itemUpload=[[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStyleDone  target:self action:@selector(uploadSet)];
     NSArray *arry=[[NSArray alloc] initWithObjects:itemAdd,itemUpload, nil];
+    
     self.navigationItem.rightBarButtonItems=arry;
     self.navigationItem.title=@"自动模式";
     //self.tableView.rowHeight=50.0;
     [self.tableView setEditing:YES animated:YES];
     //
     
-    
+    //读取数据库中最近的修改的序列
     NSError *error;
     if (![[self fetchedResultController] performFetch:&error]) {
         /*UIAlertView *alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error loading data",@"Error loading data")
@@ -65,6 +66,9 @@ enum TextFieldType{
     // Dispose of any resources that can be recreated.
 }
 
+/*
+ 返回上一个视图。要断开socket连接，dismissViewControllerAnimated:completion:方法会释放掉自己，其它方法可能只是入视图栈，会导致多个AutoModeViewController实例存在
+ */
 -(void)backModeView{
     //[self.navigationController popViewControllerAnimated:YES];
     [self.socker close];
@@ -72,6 +76,13 @@ enum TextFieldType{
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+
+/*
+ 添加序列项。
+ 1.数据库中添加一个序列实体modeset，此时只是在托管上下文中添加，并没有持久化，持久化发生在用户确认之后，否则不保存
+ 2.使用模态的警告视图获得用户输入的压力值和保压时间
+ 3.存入数据库，操作在确定按键的回调函数块内实现。coredata只支持cocoa类的存储，不支持基本数据类型的存储，所以需要NSNumber来维护int这些基本类型
+ */
 -(void)addSerilSet{
     NSString *title=@"添加序列项";
     NSString *message;
@@ -140,6 +151,7 @@ enum TextFieldType{
     
     UIAlertAction *cancelAction=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     
+    //时间文本框和气压值文本框由tag来区分
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
         textField.placeholder=@"气压值";
         textField.keyboardType=UIKeyboardTypeDecimalPad;
@@ -164,6 +176,13 @@ enum TextFieldType{
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
+/*
+ 上传数据。因为我们数据库存的只是序列，而且都是cocoa的类，不能用于与服务器数据交换，所以需要转换成josn数据，通过socket传送自动模式数据。
+ 1.检查是否ip为空，空着提示出错后面的代码不执行
+ 2.准备等待界面
+ 3.从数据库中取出序列，转化为字典，再交由socket类打包为自动模式上传数据
+ 4.实例化socket，设置为自动模式数据上传模式，上传数据
+ */
 -(void)uploadSet{
     NSString *ip=[[NSUserDefaults standardUserDefaults] valueForKey:@"ip"];
     if ([[self.fetchedResultController fetchedObjects] count]==0||[ip length]==0) {
@@ -207,6 +226,12 @@ enum TextFieldType{
     }
 }
 
+/*
+ fetchedResultController的getter方法，从数据库中读取我们需要的实体需要以下几个步骤（这里要取的是状态数据，也就是Recive实体）：
+ 1.获得数据库托管上下文 （NSManagedObjectContext），并设置获取请求（NSFetchRequest），不过要为它提供一个 NSEntityDescription，指定希望检索名为“ModeSet”的多个对象实体。还需要 NSSortDescriptor 提供检索结果的排序，这里我们用序列号来排序
+ 2.调用initWithFetchRequest:managedObjectContext:sectionNameKeyPath:cacheName:方法进行检索
+ 
+ */
 -(NSFetchedResultsController *)fetchedResultController{
     if (_fetchedResultController != nil) {
         return _fetchedResultController;
@@ -244,6 +269,12 @@ enum TextFieldType{
 
 #pragma mark - TableView Delegate
 
+/*
+             ______________________
+ cell样式为：｜第0项   1000hpa   5min｜
+            
+ */
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier=@"XTSAutoSetCell";
     XTSAutoSetCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
@@ -275,6 +306,9 @@ enum TextFieldType{
     return cell;
 }
 
+/*
+ 序列项数即是能检索到的实体数
+ */
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //#warning Incomplete implementation, return the number of rows
     //NSInteger count=[[[self.fetchedResultController sections] objectAtIndex:section] numberOfObjects];
@@ -291,7 +325,19 @@ enum TextFieldType{
 }
 
 #pragma mark - UITableView Data Delegate
-
+/*
+ 这是一个高级功能，即删除序列和交换序列功能。
+ 1.删除序列。
+ （1）首先获得对应序列的托管对象（NSManagedObject）和托管上下文（NSManagedObjectContext），在托管上下文删除该脱端对象。
+ （2）对其它托管对象，也就是序列重新排序
+ （3）保存托管上下文，即持久化
+ （4）更新视图
+ 2.交换序列。
+ （1）取得两个交换序列的托管对象（NSManagedObject）和托管上下文（NSManagedObjectContext）
+ （2）取出两个托管对象即序列的序列号 "number"，交换序列号。表视图的排序是根据检索的结果，但是检索条件是根据序列号排序，所以只需要交换序列号，再次检索的时候检索器会自动排序
+ （3）保存托管上下文，即持久化
+ （4）更新视图
+ */
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle==UITableViewCellEditingStyleDelete) {
         
@@ -398,6 +444,9 @@ enum TextFieldType{
 */
 #pragma mark - NSFetchedResultsControllerDelegate Methods
 
+/*
+ 当检索器检索结果有变化时，如删除、添加操作后，会调用如下代码进行表视图的更新
+ */
 
 - (void)controllerWillChangeContent:(NSFetchedResultsController *)controller
 {
@@ -453,6 +502,7 @@ enum TextFieldType{
 
 -(void)streamEventErrorOccurredAction:(NSError *)error type:(NSString *)type{
    // NSLog(@"ErrorOccurred :%@ ,type: %@",[error localizedDescription],type);
+    //连接超时
     [HUD hide:NO];
     if ([type isEqualToString:@"NetEventConnectOverTime"]) {
         UIAlertController *alertView=[UIAlertController alertControllerWithTitle:@"连接服务器超时" message:@"请检查你的网络和服务器ip" preferredStyle:UIAlertControllerStyleAlert];
@@ -478,6 +528,7 @@ enum TextFieldType{
 #pragma mark - StreamEventDataProcess Delegate
 
 -(void)streamDataRecvSuccess:(NSData *)data{
+    //接受到服务器响应
     [HUD hide:NO];
     //NSError *error_check_json;
     //NSDictionary *revData=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error_check_json];

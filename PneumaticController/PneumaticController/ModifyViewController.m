@@ -11,7 +11,7 @@
 #import "XTSSocketController.h"
 
 #define kIPAdressKey @"ip"
-//  要请求修改的类型，根据所需项目增减
+//  要请求修改的类型，根据所需项目增减，用于识别标签文本
 //
 enum XTSModifyType{
     XTSModifyFirst=1,
@@ -28,6 +28,7 @@ enum XTSModifyType{
 @interface ModifyViewController (){
     MBProgressHUD *HUD; //菊花
 }
+//socket，私有持有，当出错或者没有响应或数据上传结束后关闭流，下次使用再打开
 @property (nonatomic,strong) XTSSocketController *socker;
 @end
 
@@ -37,13 +38,14 @@ enum XTSModifyType{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
+    //“启动”按键按下后由buttonpress响应
     for (UIButton *button in self.modifyButtons) {
         [button addTarget:self
                    action:@selector(buttonPress:)
          forControlEvents:UIControlEventTouchUpInside];
     }
     
-    NSLog(@"w:%f,h:%f",self.view.bounds.size.width,self.view.bounds.size.height);
+    //NSLog(@"w:%f,h:%f",self.view.bounds.size.width,self.view.bounds.size.height);
 }
 
 - (void)didReceiveMemoryWarning {
@@ -54,6 +56,22 @@ enum XTSModifyType{
 
 #pragma mark - IBAction
 
+/*
+ 模式界面“启动”按键按下后，首先确定是启动哪种模式启动，这里响应的是两种：单点升压模式和单点降压模式，至于自动模式由stroyboard的show来响应。升压模式和降压模式功能十分相近，不同之处就是标题，代码流程如下：
+
+ 1.取按钮的tag值，tag值在stroyboard指定为：
+    （1）升压tag＝5
+    （2）降压tag＝6
+   确定弹出的警告框显示文字
+ 
+ 2.显示警告视图，警告视图添加：
+    （1）一个文本输入框，文本输入框输入键盘限制为数字输入。
+    （2）确定键，在回调函数块中显示等待画面，并调用上传方法 sendData2Server: 上传数据，
+        等待画面结束由错误和流结束来决定
+    （3）取消键，无任何操作
+ 
+ */
+
 -(void)buttonPress:(id)sender{
     //NSLog(@"%@",sender);
     //传入的按键的tag值＝＝修改项目类型
@@ -63,10 +81,10 @@ enum XTSModifyType{
     NSString *message=@"请输入要指定的值";
     
     switch (tag) {
-        case XTSModifyFirst:
+        case XTSModifyFive:
             title=@"升压";
             break;
-        case XTSModifySecond:
+        case XTSModifySix:
             title=@"降压";
             break;
             /*
@@ -90,6 +108,8 @@ enum XTSModifyType{
             
             break;
     }
+    
+    //weak 关键字表明函数块不能持有self，否则会造成死锁，内存无法释放
     ModifyViewController * __weak weakself=self;
     //__block NSString *value;
     
@@ -146,6 +166,22 @@ enum XTSModifyType{
 
 
 #pragma mark - Connect Function
+
+/*
+ 
+ 通过socket发送数据到服务器，参数为用户输入的数字文本。
+ 首先
+ 1.取得服务器的ip，这里使用NSUserDefaults存储ip
+ 2.准备数据，对于非自动模式只需要准备如下的字典：
+    ｛
+        "pressure"：105.5
+        "timeout"：5
+     ｝
+   压力值为浮点型，保压时间都是5分钟
+ 3.实例化socket，建立连接，发送数据。
+ 此时数据并没有完全符合标准，还需要转化，更多工作在socket类里面有详细说明
+ 
+ */
 
 -(void)sendData2Server:(NSString *)text{
     NSLog(@"%@\n",text);
