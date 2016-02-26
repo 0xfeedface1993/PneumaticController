@@ -108,20 +108,17 @@ enum XTSModifyType{
         for (UILabel *label in weakself.labels) {
             if (label.tag==tag) {
                 label.text=alertController.textFields.firstObject.text;
-                //[self  makeSomeLog];
-                //[[NSNotificationCenter defaultCenter] postNotificationName:@"GOOD" object:alertController.textFields.firstObject.text];
                 //按下ok后准备菊花显示，直到服务器通讯的结果返回
                 HUD = [[MBProgressHUD alloc] initWithView:self.view];
                 [self.view addSubview:HUD];
                 HUD.delegate = self;
                 HUD.labelText = @"正在设置";
                 HUD.dimBackground = YES;
-                //NSDictionary *inputDictionary=[NSDictionary dictionaryWithObjectsAndKeys:, nil];
                 [HUD showWhileExecuting:@selector(sendData2Server:) onTarget:self withObject:label.text animated:YES];
-                
             }
         }
     }];
+    okAction.enabled = NO;
     UIAlertAction *cancelAction=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     
     //添加ok、cancel和输入文本框
@@ -130,12 +127,21 @@ enum XTSModifyType{
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
         textField.placeholder=title;
         textField.keyboardType=UIKeyboardTypeDecimalPad;
-        //textField.ke
-        //value=[textField.text mutableCopy];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertTextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:textField];
     }];
     
     [self presentViewController:alertController animated:YES completion:nil];
     
+}
+
+#pragma mark - 输入框为空ok键不激活
+- (void)alertTextFieldDidChange:(NSNotification *)notification{
+    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+    if (alertController) {
+        UITextField *login = alertController.textFields.firstObject;
+        UIAlertAction *okAction = alertController.actions.firstObject;
+        okAction.enabled = login.text.length > 0;
+    }
 }
 
 

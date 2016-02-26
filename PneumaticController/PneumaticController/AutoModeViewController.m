@@ -347,8 +347,10 @@ enum TextFieldType{
 
     NSManagedObject *sourceModeSet = [self.fetchedResultController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sourceIndexPath.row]];
     NSManagedObject *destinationModeSet;
+    
+    //边界检查
     if (destinationIndexPath.section < [[self.fetchedResultController sections] count]) {
-    destinationModeSet = [self.fetchedResultController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:destinationIndexPath.row]];
+        destinationModeSet = [self.fetchedResultController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:destinationIndexPath.row]];
     }else{
         
     }
@@ -365,38 +367,20 @@ enum TextFieldType{
     for (NSManagedObject *modeSet in self.fetchedResultController.fetchedObjects) {
         int number = [[modeSet valueForKey:@"number"] intValue];
         if (upOrDown) {
-            if ([modeSet isEqual:sourceModeSet]) {
-                [modeSet setValue:[NSNumber numberWithInt:temp]  forKey:@"number"];
-                continue;
-            }   else if(number <= temp && number > sourceNumber) {
+            if(number <= temp && number > sourceNumber) {
                 [modeSet setValue:[NSNumber numberWithInt:number - 1]  forKey:@"number"];
             }
         }   else    {
-            if ([modeSet isEqual:sourceModeSet]) {
-                [modeSet setValue:[NSNumber numberWithInt:temp]  forKey:@"number"];
-                continue;
-            }   else if(number >= temp  && number < sourceNumber) {
+            if(number >= temp  && number < sourceNumber) {
                 [modeSet setValue:[NSNumber numberWithInt:number + 1]  forKey:@"number"];
             }
         }
     }
     
     NSError *error;
+    [sourceModeSet setValue:[NSNumber numberWithInt:temp]  forKey:@"number"];
     [managedContext save:&error];
-/*
-    sourceNumber=[[sourceModeSet valueForKey:@"number"] intValue];
-    destinationNumber=[[destinationModeSet valueForKey:@"number"] intValue];
-        
-    temp=sourceNumber;
-    sourceNumber=destinationNumber;
-    destinationNumber=temp;
 
-    NSError *error;
-    [sourceModeSet setValue:[NSNumber numberWithInt:sourceNumber]  forKey:@"number"];
-    [destinationModeSet setValue:[NSNumber numberWithInt:destinationNumber] forKey:@"number"];
-    [managedContext save:&error];
- */
-    
 }
 
 /*
