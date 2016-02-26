@@ -345,46 +345,58 @@ enum TextFieldType{
     int destinationNumber;
     int temp;
 
-    NSManagedObject *sourceModeSet=[self.fetchedResultController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sourceIndexPath.row]];
+    NSManagedObject *sourceModeSet = [self.fetchedResultController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:sourceIndexPath.row]];
     NSManagedObject *destinationModeSet;
-    if (destinationIndexPath.section<[[self.fetchedResultController sections] count]) {
-    destinationModeSet=[self.fetchedResultController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:destinationIndexPath.row]];
+    if (destinationIndexPath.section < [[self.fetchedResultController sections] count]) {
+    destinationModeSet = [self.fetchedResultController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:destinationIndexPath.row]];
     }else{
         
     }
     
     NSManagedObjectContext *managedContext=self.fetchedResultController.managedObjectContext;
     
-    //if (destinationModeSet!=nil) {
-        sourceNumber=[[sourceModeSet valueForKey:@"number"] intValue];
-        destinationNumber=[[destinationModeSet valueForKey:@"number"] intValue];
-        
-        temp=sourceNumber;
-        sourceNumber=destinationNumber;
-        destinationNumber=temp;
-    //}else{
-        
-    //}
+    sourceNumber = [[sourceModeSet valueForKey:@"number"] intValue];
+    destinationNumber = [[destinationModeSet valueForKey:@"number"] intValue];
+    //上移为真
+    BOOL upOrDown = sourceNumber < destinationNumber ? YES : NO;
+    temp = destinationNumber;
+    destinationNumber = sourceNumber;
     
+    for (NSManagedObject *modeSet in self.fetchedResultController.fetchedObjects) {
+        int number = [[modeSet valueForKey:@"number"] intValue];
+        if (upOrDown) {
+            if ([modeSet isEqual:sourceModeSet]) {
+                [modeSet setValue:[NSNumber numberWithInt:temp]  forKey:@"number"];
+                continue;
+            }   else if(number <= temp && number > sourceNumber) {
+                [modeSet setValue:[NSNumber numberWithInt:number - 1]  forKey:@"number"];
+            }
+        }   else    {
+            if ([modeSet isEqual:sourceModeSet]) {
+                [modeSet setValue:[NSNumber numberWithInt:temp]  forKey:@"number"];
+                continue;
+            }   else if(number >= temp  && number < sourceNumber) {
+                [modeSet setValue:[NSNumber numberWithInt:number + 1]  forKey:@"number"];
+            }
+        }
+    }
     
     NSError *error;
+    [managedContext save:&error];
+/*
+    sourceNumber=[[sourceModeSet valueForKey:@"number"] intValue];
+    destinationNumber=[[destinationModeSet valueForKey:@"number"] intValue];
+        
+    temp=sourceNumber;
+    sourceNumber=destinationNumber;
+    destinationNumber=temp;
+
+    NSError *error;
     [sourceModeSet setValue:[NSNumber numberWithInt:sourceNumber]  forKey:@"number"];
-    //[managedContext save:&error];
     [destinationModeSet setValue:[NSNumber numberWithInt:destinationNumber] forKey:@"number"];
     [managedContext save:&error];
+ */
     
-    //NSManagedObject *source=[self.fetchedResultController objectAtIndexPath:sourceIndexPath];
-   //NSManagedObject *destination=[self.fetchedResultController objectAtIndexPath:destinationIndexPath];
-    //NSNumber *sN=[source valueForKey:@"number"];
-    //NSNumber *dN=[destination valueForKey:@"number"];
-    
-    
-    //NSLog(@"\nsource number:%@,destination number:%@\n",sN,dN);
-    //[self.fetchedResultController performFetch:&error];
-    
-    //NSError *error;
-    //[managedContext save:&error];
-    //[self.tableView reloadData];
 }
 
 /*

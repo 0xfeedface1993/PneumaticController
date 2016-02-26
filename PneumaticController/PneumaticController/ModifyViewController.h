@@ -15,9 +15,4 @@
 
 @interface ModifyViewController : UIViewController<MBProgressHUDDelegate>
 
-//修改按钮集合
-@property (strong,nonatomic) IBOutletCollection(UIButton) NSArray *modifyButtons;
-//对应的文本标签
-@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *labels;
-
 @end

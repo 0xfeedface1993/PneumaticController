@@ -28,6 +28,11 @@ enum XTSModifyType{
     MBProgressHUD *HUD; //菊花
 }
 @property (nonatomic,strong) XTSSocketController *socker;
+//修改按钮集合
+@property (strong,nonatomic) IBOutletCollection(UIButton) NSArray *modifyButtons;
+@property (strong,nonatomic) IBOutletCollection(UIButton) NSArray *myButtons;
+//对应的文本标签
+@property (strong, nonatomic) IBOutletCollection(UILabel) NSArray *labels;
 @end
 
 @implementation ModifyViewController
@@ -36,13 +41,16 @@ enum XTSModifyType{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 
-    for (UIButton *button in self.modifyButtons) {
-        [button addTarget:self
-                   action:@selector(buttonPress:)
-         forControlEvents:UIControlEventTouchUpInside];
-    }
-    
-    NSLog(@"w:%f,h:%f",self.view.bounds.size.width,self.view.bounds.size.height);
+    for (UIButton *button in self.myButtons) {
+        button.layer.cornerRadius = button.frame.size.width/2;
+        button.backgroundColor = [self getRadomColor];
+        button.tintColor = [UIColor blackColor];
+        if ([self.modifyButtons indexOfObject:button] != NSNotFound) {
+            [button addTarget:self
+                       action:@selector(buttonPress:)
+             forControlEvents:UIControlEventTouchUpInside];
+        }
+    }   
 }
 
 - (void)didReceiveMemoryWarning {
@@ -184,5 +192,81 @@ enum XTSModifyType{
     }*/
 
 }
+
+#pragma mark - 随机颜色
+
+- (UIColor *)getRadomColor{
+    //    + (UIColor *)blackColor;      // 0.0 white
+    //    + (UIColor *)darkGrayColor;   // 0.333 white
+    //    + (UIColor *)lightGrayColor;  // 0.667 white
+    //    + (UIColor *)whiteColor;      // 1.0 white
+    //    + (UIColor *)grayColor;       // 0.5 white
+    //    + (UIColor *)redColor;        // 1.0, 0.0, 0.0 RGB
+    //    + (UIColor *)greenColor;      // 0.0, 1.0, 0.0 RGB
+    //    + (UIColor *)blueColor;       // 0.0, 0.0, 1.0 RGB
+    //    + (UIColor *)cyanColor;       // 0.0, 1.0, 1.0 RGB
+    //    + (UIColor *)yellowColor;     // 1.0, 1.0, 0.0 RGB
+    //    + (UIColor *)magentaColor;    // 1.0, 0.0, 1.0 RGB
+    //    + (UIColor *)orangeColor;     // 1.0, 0.5, 0.0 RGB
+    //    + (UIColor *)purpleColor;     // 0.5, 0.0, 0.5 RGB
+    //    + (UIColor *)brownColor;      // 0.6, 0.4, 0.2 RGB
+    //    + (UIColor *)clearColor;      // 0.0 white, 0.0 alpha
+    
+    NSUInteger number;
+    number = arc4random() % 6;
+    //number = 5;
+    UIColor *color;
+    
+    switch (number) {
+        case 0:
+            color = [UIColor colorWithRed:253.0/255.0 green:159.0/255.0 blue:37.0/255.0 alpha:1.0];
+            break;
+        case 1:
+            color = [UIColor colorWithRed:253.0/255.0 green:95.0/255.0 blue:102.0/255.0 alpha:1.0];
+            break;
+        case 2:
+            color = [UIColor colorWithRed:253.0/255.0 green:209.0/255.0 blue:50.0/255.0 alpha:1.0];
+            break;
+        case 3:
+            color = [UIColor colorWithRed:253.0/255.0 green:95.0/255.0 blue:103.0/255.0 alpha:1.0];
+            break;
+        case 4:
+            color = [UIColor colorWithRed:253.0/255.0 green:159.0/255.0 blue:37.0/255.0 alpha:1.0];
+            break;
+        case 10:
+            color = [UIColor colorWithRed:84.0/255.0 green:199.0/255.0 blue:239.0/255.0 alpha:1.0];
+            break;
+        case 5:
+            color = [UIColor colorWithRed:138.0/255.0 green:139.0/255.0 blue:249.0/255.0 alpha:1.0];
+            break;
+        case 6:
+            color = [UIColor colorWithRed:138.0/255.0 green:139.0/255.0 blue:249.0/255.0 alpha:1.0];
+            break;
+        case 7:
+            color = [UIColor colorWithRed:138.0/255.0 green:139.0/255.0 blue:249.0/255.0 alpha:1.0];
+            break;
+        case 8:
+            color = [UIColor colorWithRed:138.0/255.0 green:139.0/255.0 blue:249.0/255.0 alpha:1.0];
+            break;
+        case 9:
+            color = [UIColor colorWithRed:138.0/255.0 green:139.0/255.0 blue:249.0/255.0 alpha:1.0];
+            break;
+        default:
+            color = [UIColor colorWithRed:138.0/255.0 green:139.0/255.0 blue:249.0/255.0 alpha:1.0];
+            break;
+    }
+    
+    CGFloat red;
+    CGFloat green;
+    CGFloat blue;
+    CGFloat alpha;
+    
+    [color getRed:&red green:&green blue:&blue alpha:&alpha];
+    
+    color = [ UIColor colorWithRed:red green:green blue:blue alpha:alpha];
+    
+    return color;
+}
+
 
 @end

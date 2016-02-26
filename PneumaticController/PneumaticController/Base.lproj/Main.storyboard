@@ -191,15 +191,9 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cab-M2-QR8">
-                                <rect key="frame" x="247" y="126" width="30" height="30"/>
-                                <state key="normal" title="启动"/>
-                                <connections>
-                                    <segue destination="gUK-T8-DE4" kind="show" id="N7V-sf-XID"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" tag="5" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uGC-aA-MmL">
-                                <rect key="frame" x="247" y="244" width="30" height="30"/>
+                                <rect key="frame" x="247" y="239" width="40" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="启动"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" tag="4" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="未指定" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x8E-l1-oIX">
@@ -221,8 +215,17 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" tag="6" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j6r-9F-2Ub">
-                                <rect key="frame" x="247" y="376" width="30" height="30"/>
+                                <rect key="frame" x="247" y="372" width="40" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title="启动"/>
+                            </button>
+                            <button opaque="NO" tag="4" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cab-M2-QR8">
+                                <rect key="frame" x="247" y="122" width="40" height="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <state key="normal" title="启动"/>
+                                <connections>
+                                    <segue destination="gUK-T8-DE4" kind="show" id="N7V-sf-XID"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -234,6 +237,9 @@
                         <outletCollection property="labels" destination="F0c-d6-WeN" id="fU5-nl-32e"/>
                         <outletCollection property="labels" destination="x8E-l1-oIX" id="bUj-jF-exM"/>
                         <outletCollection property="labels" destination="WHX-Qk-zj0" id="gb3-Xh-vdz"/>
+                        <outletCollection property="myButtons" destination="Cab-M2-QR8" id="2XV-11-t5P"/>
+                        <outletCollection property="myButtons" destination="uGC-aA-MmL" id="G93-KR-Mf8"/>
+                        <outletCollection property="myButtons" destination="j6r-9F-2Ub" id="rHS-Ls-BFy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8bq-Vb-3kl" userLabel="First Responder" sceneMemberID="firstResponder"/>
