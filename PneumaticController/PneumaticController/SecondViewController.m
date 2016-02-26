@@ -8,6 +8,9 @@
 
 #import "SecondViewController.h"
 #import "XTSHTTPController.h"
+#import "JTSImageInfo.h"
+#import "JTSImageViewController.h"
+
 @interface SecondViewController ()
 @property (strong, nonatomic) XTSHTTPController *httper;
 @end
@@ -19,6 +22,9 @@
     // Do any additional setup after loading the view, typically from a nib.
     //self.photoImage.image=self.defaultImage;
     self.defaultImage=[UIImage imageNamed:@"IMG_0035.jpg"];
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showPhoto:)];
+    [self.photoImage addGestureRecognizer:tap];
+    [self.photoImage setUserInteractionEnabled:YES];
     [self.photoImage setImage:self.defaultImage];
    
     self.photoTime.text=[NSString stringWithFormat:@"%@",[NSDate date]];
@@ -41,4 +47,18 @@
     
     //[UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:self.httper.imageURL]]];//@"http://10.88.132.160:5000/static/0.jpg"IMG_0035.jpg
 }
+
+- (void)showPhoto:(UITapGestureRecognizer *)tap{
+    UIImageView *imageView = (UIImageView *)tap.view;
+    JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
+    imageInfo.image = imageView.image;
+    imageInfo.referenceRect = imageView.frame;
+    imageInfo.referenceView = imageView.superview;
+    imageInfo.referenceContentMode = imageView.contentMode;
+    imageInfo.referenceCornerRadius = 1;
+    
+    JTSImageViewController *imageViewContainer = [[JTSImageViewController alloc] initWithImageInfo:imageInfo mode:JTSImageViewControllerMode_Image backgroundStyle:JTSImageViewControllerBackgroundOption_Scaled];
+    [imageViewContainer showFromViewController:self transition:JTSImageViewControllerTransition_FromOriginalPosition];
+}
+
 @end

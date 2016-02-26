@@ -11,7 +11,8 @@
 
 #import "managedObjectViewController.h"
 
-@interface managedObjectConfiguration : managedObjectViewController
+@interface managedObjectConfiguration : NSObject
+
 -(NSInteger)numberOfSections;
 -(NSInteger)numberOfRowsInSection:(NSInteger)section;
 -(NSString *)headerInSection:(NSInteger)section;
@@ -26,4 +27,5 @@
 -(NSString *)dynamicAttributeKeyForSection:(NSInteger)section;
 */
 -(id)initWithResource:(NSString *)resource;
+
 @end

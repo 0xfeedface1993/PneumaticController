@@ -22,6 +22,12 @@
 		27DCD7DA1BF5E0E700201075 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 27DCD7D91BF5E0E700201075 /* Assets.xcassets */; };
 		27DCD7DD1BF5E0E700201075 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 27DCD7DB1BF5E0E700201075 /* LaunchScreen.storyboard */; };
 		27EBBBA41BF616950029C097 /* XTSSocketController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EBBBA31BF616950029C097 /* XTSSocketController.m */; };
+		27EE946E1C771C1500DD9EB2 /* JTSAnimatedGIFUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EE94631C771C1500DD9EB2 /* JTSAnimatedGIFUtility.m */; };
+		27EE946F1C771C1500DD9EB2 /* JTSImageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EE94651C771C1500DD9EB2 /* JTSImageInfo.m */; };
+		27EE94701C771C1500DD9EB2 /* JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EE94671C771C1500DD9EB2 /* JTSImageViewController.m */; };
+		27EE94711C771C1500DD9EB2 /* JTSSimpleImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EE94691C771C1500DD9EB2 /* JTSSimpleImageDownloader.m */; };
+		27EE94721C771C1500DD9EB2 /* UIApplication+JTSImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EE946B1C771C1500DD9EB2 /* UIApplication+JTSImageViewController.m */; };
+		27EE94731C771C1500DD9EB2 /* UIImage+JTSImageEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EE946D1C771C1500DD9EB2 /* UIImage+JTSImageEffects.m */; };
 		27F5A60F1C05A8D200BD4C61 /* XTSInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F5A60E1C05A8D200BD4C61 /* XTSInfoCell.m */; };
 		27F5A6121C05AC4B00BD4C61 /* UpDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 27F5A6101C05AC4B00BD4C61 /* UpDataModel.xcdatamodeld */; };
 		27F5A6151C05CDFD00BD4C61 /* XTSStateCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F5A6141C05CDFD00BD4C61 /* XTSStateCell.m */; };
@@ -50,8 +56,8 @@
 		27DB8E961C03ECEC00752823 /* managedObjectConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = managedObjectConfiguration.m; sourceTree = "<group>"; };
 		27DCD7C71BF5E0E700201075 /* PneumaticController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PneumaticController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DCD7CB1BF5E0E700201075 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		27DCD7CD1BF5E0E700201075 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		27DCD7CE1BF5E0E700201075 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		27DCD7CD1BF5E0E700201075 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PneumaticController/AppDelegate.h; sourceTree = "<group>"; };
+		27DCD7CE1BF5E0E700201075 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = PneumaticController/AppDelegate.m; sourceTree = "<group>"; };
 		27DCD7D31BF5E0E700201075 /* SecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		27DCD7D41BF5E0E700201075 /* SecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 		27DCD7D71BF5E0E700201075 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -60,6 +66,18 @@
 		27DCD7DE1BF5E0E700201075 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		27EBBBA21BF616950029C097 /* XTSSocketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSSocketController.h; sourceTree = "<group>"; };
 		27EBBBA31BF616950029C097 /* XTSSocketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSSocketController.m; sourceTree = "<group>"; };
+		27EE94621C771C1500DD9EB2 /* JTSAnimatedGIFUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSAnimatedGIFUtility.h; sourceTree = "<group>"; };
+		27EE94631C771C1500DD9EB2 /* JTSAnimatedGIFUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSAnimatedGIFUtility.m; sourceTree = "<group>"; };
+		27EE94641C771C1500DD9EB2 /* JTSImageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageInfo.h; sourceTree = "<group>"; };
+		27EE94651C771C1500DD9EB2 /* JTSImageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageInfo.m; sourceTree = "<group>"; };
+		27EE94661C771C1500DD9EB2 /* JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSImageViewController.h; sourceTree = "<group>"; };
+		27EE94671C771C1500DD9EB2 /* JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSImageViewController.m; sourceTree = "<group>"; };
+		27EE94681C771C1500DD9EB2 /* JTSSimpleImageDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JTSSimpleImageDownloader.h; sourceTree = "<group>"; };
+		27EE94691C771C1500DD9EB2 /* JTSSimpleImageDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JTSSimpleImageDownloader.m; sourceTree = "<group>"; };
+		27EE946A1C771C1500DD9EB2 /* UIApplication+JTSImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIApplication+JTSImageViewController.h"; sourceTree = "<group>"; };
+		27EE946B1C771C1500DD9EB2 /* UIApplication+JTSImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIApplication+JTSImageViewController.m"; sourceTree = "<group>"; };
+		27EE946C1C771C1500DD9EB2 /* UIImage+JTSImageEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+JTSImageEffects.h"; sourceTree = "<group>"; };
+		27EE946D1C771C1500DD9EB2 /* UIImage+JTSImageEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+JTSImageEffects.m"; sourceTree = "<group>"; };
 		27F5A60D1C05A8D200BD4C61 /* XTSInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSInfoCell.h; sourceTree = "<group>"; };
 		27F5A60E1C05A8D200BD4C61 /* XTSInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSInfoCell.m; sourceTree = "<group>"; };
 		27F5A6111C05AC4B00BD4C61 /* UpDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = UpDataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -89,6 +107,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		27D6E03D1C8088C90035D6A9 /* 实时图像 */ = {
+			isa = PBXGroup;
+			children = (
+				27DCD7D31BF5E0E700201075 /* SecondViewController.h */,
+				27DCD7D41BF5E0E700201075 /* SecondViewController.m */,
+			);
+			name = "实时图像";
+			sourceTree = "<group>";
+		};
+		27D6E03E1C8088D80035D6A9 /* 示值指定 */ = {
+			isa = PBXGroup;
+			children = (
+				27FE65DB1C0FE7F1003EC968 /* AutoModeViewController.h */,
+				27FE65DC1C0FE7F1003EC968 /* AutoModeViewController.m */,
+				27F5A61A1C05E06F00BD4C61 /* ModifyViewController.h */,
+				27F5A61B1C05E06F00BD4C61 /* ModifyViewController.m */,
+			);
+			name = "示值指定";
+			sourceTree = "<group>";
+		};
+		27D6E03F1C8088E30035D6A9 /* 状态监测 */ = {
+			isa = PBXGroup;
+			children = (
+				27DB8E8F1C03E66A00752823 /* StateMonitorTableViewController.h */,
+				27DB8E901C03E66A00752823 /* StateMonitorTableViewController.m */,
+			);
+			name = "状态监测";
+			sourceTree = "<group>";
+		};
 		27DCD7BE1BF5E0E700201075 = {
 			isa = PBXGroup;
 			children = (
@@ -96,6 +143,8 @@
 				271737F31C1EE67100DE5CB4 /* Recive.h */,
 				271737F41C1EE67100DE5CB4 /* Recive.m */,
 				27FE65DE1C0FE90E003EC968 /* AutoModeTableList.plist */,
+				27DCD7CD1BF5E0E700201075 /* AppDelegate.h */,
+				27DCD7CE1BF5E0E700201075 /* AppDelegate.m */,
 				27DCD7C91BF5E0E700201075 /* PneumaticController */,
 				27DCD7C81BF5E0E700201075 /* Products */,
 			);
@@ -112,27 +161,9 @@
 		27DCD7C91BF5E0E700201075 /* PneumaticController */ = {
 			isa = PBXGroup;
 			children = (
-				276D09111C06B11B004921C0 /* MBProgressHUD.h */,
-				276D09121C06B11B004921C0 /* MBProgressHUD.m */,
-				27DCD7CD1BF5E0E700201075 /* AppDelegate.h */,
-				27ADA3271BFF097D0019B430 /* photo.jpeg */,
-				27DCD7CE1BF5E0E700201075 /* AppDelegate.m */,
-				27DCD7D31BF5E0E700201075 /* SecondViewController.h */,
-				27DCD7D41BF5E0E700201075 /* SecondViewController.m */,
+				27EE94761C77212E00DD9EB2 /* Cell */,
+				27EE94751C77210900DD9EB2 /* 主页 */,
 				27DCD7D61BF5E0E700201075 /* Main.storyboard */,
-				27F5A61A1C05E06F00BD4C61 /* ModifyViewController.h */,
-				27F5A61B1C05E06F00BD4C61 /* ModifyViewController.m */,
-				27DB8E8F1C03E66A00752823 /* StateMonitorTableViewController.h */,
-				27DB8E901C03E66A00752823 /* StateMonitorTableViewController.m */,
-				27FE65DB1C0FE7F1003EC968 /* AutoModeViewController.h */,
-				27FE65DC1C0FE7F1003EC968 /* AutoModeViewController.m */,
-				27F5A6101C05AC4B00BD4C61 /* UpDataModel.xcdatamodeld */,
-				27F5A6131C05CDFD00BD4C61 /* XTSStateCell.h */,
-				27F5A6141C05CDFD00BD4C61 /* XTSStateCell.m */,
-				27F5A60D1C05A8D200BD4C61 /* XTSInfoCell.h */,
-				27F5A60E1C05A8D200BD4C61 /* XTSInfoCell.m */,
-				27FE65E01C0FF308003EC968 /* XTSAutoSetCell.h */,
-				27FE65E11C0FF308003EC968 /* XTSAutoSetCell.m */,
 				27FE65D81C0FE662003EC968 /* managedObjectViewController.h */,
 				27FE65D91C0FE662003EC968 /* managedObjectViewController.m */,
 				27DB8E951C03ECEC00752823 /* managedObjectConfiguration.h */,
@@ -140,10 +171,9 @@
 				27DCD7D91BF5E0E700201075 /* Assets.xcassets */,
 				27DCD7DB1BF5E0E700201075 /* LaunchScreen.storyboard */,
 				27DCD7DE1BF5E0E700201075 /* Info.plist */,
-				27EBBBA21BF616950029C097 /* XTSSocketController.h */,
-				27EBBBA31BF616950029C097 /* XTSSocketController.m */,
-				27ADA3241BFED1180019B430 /* XTSHTTPController.h */,
-				27ADA3251BFED1180019B430 /* XTSHTTPController.m */,
+				27EE94771C77214D00DD9EB2 /* webservice */,
+				27F5A6101C05AC4B00BD4C61 /* UpDataModel.xcdatamodeld */,
+				27EE94601C771BEA00DD9EB2 /* tools */,
 				27DCD7CA1BF5E0E700201075 /* Supporting Files */,
 			);
 			path = PneumaticController;
@@ -152,12 +182,84 @@
 		27DCD7CA1BF5E0E700201075 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				27ADA3271BFF097D0019B430 /* photo.jpeg */,
 				276D090F1C06ABAF004921C0 /* IMG_0035.jpg */,
 				27F5A6181C05D07400BD4C61 /* 黑色按钮.png */,
 				27F5A6161C05CFE400BD4C61 /* 红色按钮.jpg */,
 				27DCD7CB1BF5E0E700201075 /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		27EE94601C771BEA00DD9EB2 /* tools */ = {
+			isa = PBXGroup;
+			children = (
+				27EE94741C7720DD00DD9EB2 /* MBProgressHUD */,
+				27EE94611C771BF700DD9EB2 /* JTSImage */,
+			);
+			name = tools;
+			sourceTree = "<group>";
+		};
+		27EE94611C771BF700DD9EB2 /* JTSImage */ = {
+			isa = PBXGroup;
+			children = (
+				27EE94621C771C1500DD9EB2 /* JTSAnimatedGIFUtility.h */,
+				27EE94631C771C1500DD9EB2 /* JTSAnimatedGIFUtility.m */,
+				27EE94641C771C1500DD9EB2 /* JTSImageInfo.h */,
+				27EE94651C771C1500DD9EB2 /* JTSImageInfo.m */,
+				27EE94661C771C1500DD9EB2 /* JTSImageViewController.h */,
+				27EE94671C771C1500DD9EB2 /* JTSImageViewController.m */,
+				27EE94681C771C1500DD9EB2 /* JTSSimpleImageDownloader.h */,
+				27EE94691C771C1500DD9EB2 /* JTSSimpleImageDownloader.m */,
+				27EE946A1C771C1500DD9EB2 /* UIApplication+JTSImageViewController.h */,
+				27EE946B1C771C1500DD9EB2 /* UIApplication+JTSImageViewController.m */,
+				27EE946C1C771C1500DD9EB2 /* UIImage+JTSImageEffects.h */,
+				27EE946D1C771C1500DD9EB2 /* UIImage+JTSImageEffects.m */,
+			);
+			name = JTSImage;
+			sourceTree = "<group>";
+		};
+		27EE94741C7720DD00DD9EB2 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				276D09111C06B11B004921C0 /* MBProgressHUD.h */,
+				276D09121C06B11B004921C0 /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
+			sourceTree = "<group>";
+		};
+		27EE94751C77210900DD9EB2 /* 主页 */ = {
+			isa = PBXGroup;
+			children = (
+				27D6E03F1C8088E30035D6A9 /* 状态监测 */,
+				27D6E03E1C8088D80035D6A9 /* 示值指定 */,
+				27D6E03D1C8088C90035D6A9 /* 实时图像 */,
+			);
+			name = "主页";
+			sourceTree = "<group>";
+		};
+		27EE94761C77212E00DD9EB2 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				27F5A6131C05CDFD00BD4C61 /* XTSStateCell.h */,
+				27F5A6141C05CDFD00BD4C61 /* XTSStateCell.m */,
+				27F5A60D1C05A8D200BD4C61 /* XTSInfoCell.h */,
+				27F5A60E1C05A8D200BD4C61 /* XTSInfoCell.m */,
+				27FE65E01C0FF308003EC968 /* XTSAutoSetCell.h */,
+				27FE65E11C0FF308003EC968 /* XTSAutoSetCell.m */,
+			);
+			name = Cell;
+			sourceTree = "<group>";
+		};
+		27EE94771C77214D00DD9EB2 /* webservice */ = {
+			isa = PBXGroup;
+			children = (
+				27EBBBA21BF616950029C097 /* XTSSocketController.h */,
+				27EBBBA31BF616950029C097 /* XTSSocketController.m */,
+				27ADA3241BFED1180019B430 /* XTSHTTPController.h */,
+				27ADA3251BFED1180019B430 /* XTSHTTPController.m */,
+			);
+			name = webservice;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -239,19 +341,25 @@
 			files = (
 				27FE65DD1C0FE7F1003EC968 /* AutoModeViewController.m in Sources */,
 				27F5A61C1C05E06F00BD4C61 /* ModifyViewController.m in Sources */,
+				27EE94731C771C1500DD9EB2 /* UIImage+JTSImageEffects.m in Sources */,
 				27F5A6151C05CDFD00BD4C61 /* XTSStateCell.m in Sources */,
 				27FE65DA1C0FE662003EC968 /* managedObjectViewController.m in Sources */,
+				27EE946E1C771C1500DD9EB2 /* JTSAnimatedGIFUtility.m in Sources */,
 				27DCD7D51BF5E0E700201075 /* SecondViewController.m in Sources */,
 				27F5A6121C05AC4B00BD4C61 /* UpDataModel.xcdatamodeld in Sources */,
 				27ADA3261BFED1180019B430 /* XTSHTTPController.m in Sources */,
 				27DCD7CF1BF5E0E700201075 /* AppDelegate.m in Sources */,
 				27DB8E971C03ECEC00752823 /* managedObjectConfiguration.m in Sources */,
 				27DB8E911C03E66A00752823 /* StateMonitorTableViewController.m in Sources */,
+				27EE946F1C771C1500DD9EB2 /* JTSImageInfo.m in Sources */,
 				27DCD7CC1BF5E0E700201075 /* main.m in Sources */,
+				27EE94721C771C1500DD9EB2 /* UIApplication+JTSImageViewController.m in Sources */,
 				27F5A60F1C05A8D200BD4C61 /* XTSInfoCell.m in Sources */,
 				27FE65E21C0FF308003EC968 /* XTSAutoSetCell.m in Sources */,
+				27EE94701C771C1500DD9EB2 /* JTSImageViewController.m in Sources */,
 				27EBBBA41BF616950029C097 /* XTSSocketController.m in Sources */,
 				271737F61C1EE67100DE5CB4 /* Recive.m in Sources */,
+				27EE94711C771C1500DD9EB2 /* JTSSimpleImageDownloader.m in Sources */,
 				276D09131C06B11B004921C0 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,9 +472,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PneumaticController/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -377,9 +485,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PneumaticController/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController.test;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
