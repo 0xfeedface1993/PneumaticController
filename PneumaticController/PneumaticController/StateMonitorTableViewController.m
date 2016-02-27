@@ -253,19 +253,14 @@
     // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(makeSomeLog:) name:@"GOOD" object:nil];
     
     UIAlertAction *okAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-                //按下ok后准备菊花显示，直到服务器通讯的结果返回
-        /*
-                HUD = [[MBProgressHUD alloc] initWithView:self.view];
-                [self.view addSubview:HUD];
-                HUD.delegate = self;
-                HUD.labelText = @"正在设置";
-                HUD.dimBackground = YES;
-        [HUD showWhileExecuting:@selector(configIP:) onTarget:self withObject:alertController.textFields.firstObject.text animated:YES];*/
         [self configIP:alertController.textFields.firstObject.text];
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UITextFieldTextDidChangeNotification
+                                                      object:nil];
     }];
     
     UIAlertAction *cancelAction=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
-    
+    __weak UIAlertController * weakAlertConteoller = alertController;
     //添加ok、cancel和输入文本框
     [alertController addAction:okAction];
     [alertController addAction:cancelAction];
@@ -274,8 +269,10 @@
         NSString *titleIP=[userDefaults valueForKey:kIPAdressKey];
         textField.text=titleIP;
         textField.keyboardType=UIKeyboardTypeDecimalPad;
-        //textField.ke
-        //value=[textField.text mutableCopy];
+        textField.delegate = self;
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(alertTextFieldDidChange:)
+                                                     name:UITextFieldTextDidChangeNotification object:nil];
     }];
     
     [self presentViewController:alertController animated:YES completion:nil];
@@ -285,7 +282,51 @@
 -(void)configIP:(NSString *)text{
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
     [userDefaults setObject:text forKey:kIPAdressKey];
+}
 
+#pragma mark - 输入检查
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    
+    NSCharacterSet *nonNumberSet = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."]invertedSet];
+    // allow backspace
+    if (range.length > 0 && [string length] == 0) {
+        return YES;
+    }
+    // do not allow . at the beggining
+    if (range.location == 0 && [string isEqualToString:@"."]) {
+        return NO;
+    }
+    // currentField指的是当前确定的那个输入框,当前面的字符有小数点的时候就不替换
+    NSString *currentText = textField.text;
+    if (([string isEqualToString:@"."] && [currentText rangeOfString:@"." options:NSBackwardsSearch|NSAnchoredSearch].length == 1)) {
+        string = @"";
+        //alreay has a decimal point
+        return NO;
+    }
+    
+    NSString *newValue = [[textField text] stringByReplacingCharactersInRange:range withString:string];
+    newValue = [[newValue componentsSeparatedByCharactersInSet:nonNumberSet] componentsJoinedByString:@""];
+ 
+    if ([newValue rangeOfString:@"(\\d{1,}\\.){4}" options:NSRegularExpressionSearch].length > 0) {
+        return NO;
+    }
+    
+    return YES;
+}
+
+#pragma mark - 输入框为空ok键不激活
+- (void)alertTextFieldDidChange:(NSNotification *)notification{
+    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+    if (alertController) {
+        UIAlertAction *okAction = alertController.actions.firstObject;
+        UITextField *textField = alertController.textFields.firstObject;
+        if ([[textField text] rangeOfString:@"((2[0-4]\\d|25[0-5]|[01]?\\d\\d?)\\.){3}(2[0-4]\\d|25[0-5]|[01]?\\d\\d?)" options:NSRegularExpressionSearch].length > 0) {
+            okAction.enabled = YES;
+        }   else    {
+            okAction.enabled = NO;
+        }
+    }
 }
 
 #pragma mark - Table view data source
@@ -293,7 +334,7 @@
 
 /*
  - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
- UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+ UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier: forIndexPath:indexPath];
  
  // Configure the cell...
  

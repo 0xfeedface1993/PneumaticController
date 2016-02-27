@@ -117,6 +117,9 @@ enum XTSModifyType{
                 [HUD showWhileExecuting:@selector(sendData2Server:) onTarget:self withObject:label.text animated:YES];
             }
         }
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UITextFieldTextDidChangeNotification
+                                                      object:nil];
     }];
     okAction.enabled = NO;
     UIAlertAction *cancelAction=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
@@ -125,8 +128,9 @@ enum XTSModifyType{
     [alertController addAction:okAction];
     [alertController addAction:cancelAction];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
-        textField.placeholder=title;
-        textField.keyboardType=UIKeyboardTypeDecimalPad;
+        textField.delegate = self;
+        textField.placeholder = title;
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertTextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:textField];
     }];
     
@@ -137,13 +141,33 @@ enum XTSModifyType{
 #pragma mark - 输入框为空ok键不激活
 - (void)alertTextFieldDidChange:(NSNotification *)notification{
     UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+    UITextField *textField = alertController.textFields.firstObject;
     if (alertController) {
-        UITextField *login = alertController.textFields.firstObject;
         UIAlertAction *okAction = alertController.actions.firstObject;
-        okAction.enabled = login.text.length > 0;
+        okAction.enabled = [textField text].length > 0;
     }
 }
 
+#pragma mark - 输入检查
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    // allow backspace
+    if (range.length > 0 && [string length] == 0) {
+        return YES;
+    }
+    // do not allow . at the beggining
+    if (range.location == 0 && [string isEqualToString:@"."]) {
+        return NO;
+    }
+    // currentField指的是当前确定的那个输入框,当前面的字符有小数点的时候就不替换
+    NSString *currentText = textField.text;
+    if ([string isEqualToString:@"."] && [currentText rangeOfString:@"." options:NSBackwardsSearch].length == 1) {
+        string = @"";
+        //alreay has a decimal point
+        return NO;
+    }
+    return YES;
+}
 
 #pragma mark - Navigation
 

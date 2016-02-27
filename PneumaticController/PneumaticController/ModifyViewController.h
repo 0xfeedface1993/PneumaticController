@@ -13,6 +13,6 @@
 
 
 
-@interface ModifyViewController : UIViewController <MBProgressHUDDelegate>
+@interface ModifyViewController : UIViewController <MBProgressHUDDelegate, UITextFieldDelegate>
 
 @end

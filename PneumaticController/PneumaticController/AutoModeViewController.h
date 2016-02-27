@@ -11,6 +11,6 @@
 
 //@class ModifyViewController;
 
-@interface AutoModeViewController : managedObjectViewController<NSFetchedResultsControllerDelegate,UITableViewDelegate,UITableViewDataSource,XTSSocketControllerStreamEventErrorOccurredDelegate,XTSSocketControllerStreamEventDataProcessDelegate>
+@interface AutoModeViewController : managedObjectViewController <NSFetchedResultsControllerDelegate, UITableViewDelegate,UITableViewDataSource, XTSSocketControllerStreamEventErrorOccurredDelegate, XTSSocketControllerStreamEventDataProcessDelegate, UITextFieldDelegate>
 //@property (nonatomic,weak) ModifyViewController *modifyControllerx;
 @end

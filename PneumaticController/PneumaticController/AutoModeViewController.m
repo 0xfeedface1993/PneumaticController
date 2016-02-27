@@ -48,12 +48,12 @@ enum TextFieldType{
     
     NSError *error;
     if (![[self fetchedResultController] performFetch:&error]) {
-        /*UIAlertView *alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error loading data",@"Error loading data")
+        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error loading data",@"Error loading data")
                                                       message:[NSString stringWithFormat:NSLocalizedString(@"Error was:%@, quitting.", @"Error was:%@, quitting."),[error localizedDescription]]
                                                      delegate:self
                                             cancelButtonTitle:NSLocalizedString(@"Aw, Nuts", @"Aw, Nuts")
                                             otherButtonTitles:nil];
-        [alert show];*/
+        [alert show];
     }
 
    
@@ -78,7 +78,6 @@ enum TextFieldType{
     //对话框弹出
     NSManagedObjectContext *managedObjectContext=[self.fetchedResultController managedObjectContext];
     NSEntityDescription *entity=[[self.fetchedResultController fetchRequest] entity];
-    //[NSEntityDescription insertNewObjectForEntityForName:[entity name] inManagedObjectContext:managedObjectContext];
     NSManagedObject *newModeSet=[NSEntityDescription insertNewObjectForEntityForName:[entity name]
                                                               inManagedObjectContext:managedObjectContext];
     
@@ -88,85 +87,63 @@ enum TextFieldType{
     UIAlertAction *okAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
         int timeStable = 0;
         float pressure = 0.0;
+        
         for (UITextField *textField in alertController.textFields) {
             if (textField.tag==XTSTimeTextField) {
-                timeStable=textField.text.intValue;
+                timeStable = textField.text.intValue;
             }
             if(textField.tag==XTSPressureTextField){
-                pressure=textField.text.intValue;
+                pressure = textField.text.intValue;
             }
         }
-                /*
-        for (XTSAutoSetCell  *cell in [self.tableView visibleCells]) {
-            [self.managedObject setValue:[cell value] forKey:[cell key]];
-            //the Birthdate should be NSDate type,but we save it to to String type,just for easy
-        }*/
-        //[self save];
-        //[self.tableView reloadData];
-       // NSError *errorx;
-        //if (![[self fetchedResultController] performFetch:&errorx]) {
-            
-        //}
         
         int number=[[self.fetchedResultController fetchedObjects] count];
-        //[newModeSet setValue:[[NSNumber alloc] initWithInt:timeStable] forKey:@"time"];
-        //[newModeSet setValue:[[NSNumber alloc] initWithFloat:pressure] forKey:@"pressure"];
-        //[newModeSet setValue:[[NSNumber alloc] initWithInt:number] forKey:@"number"];
         [newModeSet setValue:[[NSNumber alloc] initWithInt:timeStable] forKey:@"time"];
         [newModeSet setValue:[[NSNumber alloc] initWithFloat:pressure] forKey:@"pressure"];
         [newModeSet setValue:[[NSNumber alloc] initWithInt:number] forKey:@"number"];
-        //NSLog(@"%d",[managedObjectContext hasChanges]);
         NSError *error;
         if (![newModeSet.managedObjectContext save:&error]) {
-           /* UIAlertView *alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error saving entity", @"Error saving entity")
+            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error saving entity", @"Error saving entity")
                                                           message:[NSString stringWithFormat:NSLocalizedString(@"Error was:%@,quitting.", @"Error was:%@,quitting."),[error localizedDescription]]
                                                          delegate:self
                                                 cancelButtonTitle:NSLocalizedString(@"Aw, Nuts", @"Aw, Nuts")
                                                 otherButtonTitles:nil];
-            [alert show];*/
+            [alert show];
         }
-        
-        //NSManagedObject *aModeSet=[[self.fetchedResultController fetchedObjects] lastObject];
-        
-        //NSLog(@"\n entity %@, number %@,time %@,pressure %@\n",[aModeSet.entity name],[aModeSet valueForKey:@"number"],[aModeSet valueForKey:@"time"],[aModeSet valueForKey:@"pressure"]);
-        
-        //[self.fetchedResultController performFetch:&error];
-        
-       //[self.tableView reloadData];
-        
-        
-        
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:UITextFieldTextDidChangeNotification
+                                                      object:nil];
     }];
+    okAction.enabled = NO;
     
     UIAlertAction *cancelAction=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
-        textField.placeholder=@"气压值";
-        textField.keyboardType=UIKeyboardTypeDecimalPad;
-        textField.tag=XTSPressureTextField;
-        //textField.ke
-        //value=[textField.text mutableCopy];
+        textField.placeholder = @"气压值";
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+        textField.tag = XTSPressureTextField;
+        textField.delegate = self;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertTextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     }];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
-        textField.placeholder=@"时间";
-        textField.keyboardType=UIKeyboardTypeDecimalPad;
-        textField.tag=XTSTimeTextField;
-        //textField.ke
-        //value=[textField.text mutableCopy];
+        textField.placeholder = @"时间";
+        textField.keyboardType = UIKeyboardTypeDecimalPad;
+        textField.tag = XTSTimeTextField;
+        textField.delegate = self;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertTextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
     }];
     
     //添加ok、cancel和输入文本框
     [alertController addAction:okAction];
     [alertController addAction:cancelAction];
     
-    
     [self presentViewController:alertController animated:YES completion:nil];
 }
 
 -(void)uploadSet{
-    NSString *ip=[[NSUserDefaults standardUserDefaults] valueForKey:@"ip"];
-    if ([[self.fetchedResultController fetchedObjects] count]==0||[ip length]==0) {
+    NSString *ip = [[NSUserDefaults standardUserDefaults] valueForKey:@"ip"];
+    if ([[self.fetchedResultController fetchedObjects] count] == 0 || [ip length] == 0) {
         return;
     }
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
@@ -180,30 +157,64 @@ enum TextFieldType{
 }
 
 -(void)packDataUp{
-    NSArray *modeSets=[self.fetchedResultController fetchedObjects];
-    NSMutableArray *array=[[NSMutableArray alloc] init];
+    NSArray *modeSets = [self.fetchedResultController fetchedObjects];
+    NSMutableArray *array = [[NSMutableArray alloc] init];
     for (NSManagedObject *aModeSet in modeSets) {
-        NSNumber *time=[aModeSet valueForKey:@"time"];
-        NSNumber *number=[aModeSet valueForKey:@"number"];
-        NSNumber *pressure=[aModeSet valueForKey:@"pressure"];
-        NSDictionary *set=[NSDictionary dictionaryWithObjectsAndKeys:time,@"time",number,@"number",pressure,@"pressure", nil];
+        NSNumber *time = [aModeSet valueForKey:@"time"];
+        NSNumber *number = [aModeSet valueForKey:@"number"];
+        NSNumber *pressure = [aModeSet valueForKey:@"pressure"];
+        NSDictionary *set = [NSDictionary dictionaryWithObjectsAndKeys:time,@"time",number,@"number",pressure,@"pressure", nil];
         [array addObject:set];
     }
    // NSSortDescriptor *sortDescriptor=[NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
     //[array sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
 
-    if (self.socker==nil) {
-        _socker=[[XTSSocketController alloc] init];
+    if (self.socker == nil) {
+        _socker = [[XTSSocketController alloc] init];
     }
-    _socker.flag=1;
-    _socker.errorDelegate=self;
-    _socker.dataDelegate=self;
-    NSString *ip=[[NSUserDefaults standardUserDefaults] valueForKey:@"ip"];
+    _socker.flag = 1;
+    _socker.errorDelegate = self;
+    _socker.dataDelegate = self;
+    NSString *ip = [[NSUserDefaults standardUserDefaults] valueForKey:@"ip"];
     [_socker initNetworkCommunication:nil hostIP:ip];
     NSDictionary *dataPack=[self.socker packSendData:modeSets WithMode:XTSDataAutoMode];
     
     if (![_socker sendDataWithMode:XTSDataAutoMode dataPack:dataPack]) {
         NSLog(@"upload failed!");
+    }
+}
+
+#pragma mark - 输入检查
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    // allow backspace
+    if (range.length > 0 && [string length] == 0) {
+        return YES;
+    }
+    // do not allow . at the beggining
+    if (range.location == 0 && [string isEqualToString:@"."]) {
+        return NO;
+    }
+    // currentField指的是当前确定的那个输入框,当前面的字符有小数点的时候就不替换
+    NSString *currentText = textField.text;
+    if ([string isEqualToString:@"."] && [currentText rangeOfString:@"." options:NSBackwardsSearch].length == 1) {
+        string = @"";
+        //alreay has a decimal point
+        return NO;
+    }
+    
+    
+    return YES;
+}
+
+#pragma mark - 输入框为空ok键不激活
+- (void)alertTextFieldDidChange:(NSNotification *)notification{
+    UIAlertController *alertController = (UIAlertController *)self.presentedViewController;
+    UIAlertAction *okAction = alertController.actions.firstObject;
+    if (alertController) {
+        for (UITextField *textField in alertController.textFields) {
+            okAction.enabled = [textField text].length > 0;
+        }
     }
 }
 
@@ -247,77 +258,63 @@ enum TextFieldType{
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     static NSString *CellIdentifier=@"XTSAutoSetCell";
     XTSAutoSetCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if (cell==nil) {
-        cell=[[XTSAutoSetCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier];
+    if (cell == nil) {
+        cell = [[XTSAutoSetCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier];
     }
     
     // Configure the cell...
 
-    NSManagedObject *aModeSet=[self.fetchedResultController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.row]];
+    NSManagedObject *aModeSet = [self.fetchedResultController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.row]];
 
-    NSNumber *time=[aModeSet valueForKey:@"time"];
-    NSNumber *number=[aModeSet valueForKey:@"number"];
-    NSNumber *pressure=[aModeSet valueForKey:@"pressure"];
-    //NSLog(@"\nnumber %@,time %@,pressure %@\n",[aModeSet valueForKey:@"number"],[aModeSet valueForKey:@"time"],[aModeSet valueForKey:@"pressure"]);
+    NSNumber *time = [aModeSet valueForKey:@"time"];
+    NSNumber *number = [aModeSet valueForKey:@"number"];
+    NSNumber *pressure = [aModeSet valueForKey:@"pressure"];
     
-    if (aModeSet==nil) {
+    if (aModeSet == nil) {
         return cell;
     }
-     
+
+    cell.textLabel.text = [NSString stringWithFormat:@"第%d项",[number intValue]];
+    cell.textLabel.textAlignment = NSTextAlignmentLeft;
+    cell.label.text = [NSString stringWithFormat:@"%d min",[time intValue]];
+    cell.pressure.textAlignment = NSTextAlignmentLeft;
+    cell.pressure.text = [NSString stringWithFormat:@"%.2f hPa",[pressure floatValue]];
     
-    cell.textLabel.text=[NSString stringWithFormat:@"第%d项",[number intValue]];
-    cell.textLabel.textAlignment=NSTextAlignmentLeft;
-    cell.label.text=[NSString stringWithFormat:@"%d min",[time intValue]];
-    cell.pressure.textAlignment=NSTextAlignmentLeft;
-    cell.pressure.text=[NSString stringWithFormat:@"%.2f hPa",[pressure floatValue]];
-    //[cell set]
-    //cell.showsReorderControl=NO;
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //#warning Incomplete implementation, return the number of rows
-    //NSInteger count=[[[self.fetchedResultController sections] objectAtIndex:section] numberOfObjects];
-    NSInteger count=[[self.fetchedResultController sections] count];
+    NSInteger count = [[self.fetchedResultController sections] count];
     NSLog(@"rows %ld in section %ld",section,count);
     return count;
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    //#warning Incomplete implementation, return the number of sections
-    //NSInteger count=[[self.fetchedResultController sections] count];
-   // NSLog(@"section: %ld",(long)count);
     return 1;
 }
 
 #pragma mark - UITableView Data Delegate
 
 -(void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (editingStyle==UITableViewCellEditingStyleDelete) {
-        
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
         NSError *error;
-        NSManagedObject *aModeSet=[self.fetchedResultController objectAtIndexPath:[NSIndexPath indexPathForRow:indexPath.section inSection:0]];
-        NSManagedObjectContext *managedContext=self.fetchedResultController.managedObjectContext;
-        int deleteNumber=[[aModeSet valueForKey:@"number"] intValue];
+        NSManagedObject *aModeSet = [self.fetchedResultController objectAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:indexPath.row]];
+        NSManagedObjectContext *managedContext = self.fetchedResultController.managedObjectContext;
+        int deleteNumber = [[aModeSet valueForKey:@"number"] intValue];
         [managedContext deleteObject:aModeSet];
         [managedContext save:&error];
         
         for (NSManagedObject *object in [self.fetchedResultController fetchedObjects]) {
-            NSNumber *number=[object valueForKey:@"number"];
-            if ([number intValue]>deleteNumber) {
-                number=[NSNumber numberWithInt:[number intValue]-1];
+            NSNumber *number = [object valueForKey:@"number"];
+            if ([number intValue] > deleteNumber) {
+                number = [NSNumber numberWithInt:[number intValue]-1];
                 [object setValue:number forKey:@"number"];
             }
         }
         
         [managedContext save:&error];
         [self.tableView reloadData];
-    }
-    if (editingStyle==UITableViewCellEditingStyleInsert) {
-        
-    }
-    if (editingStyle==UITableViewCellEditingStyleNone) {
-        
     }
 }
 
