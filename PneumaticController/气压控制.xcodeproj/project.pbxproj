@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		271737F61C1EE67100DE5CB4 /* Recive.m in Sources */ = {isa = PBXBuildFile; fileRef = 271737F41C1EE67100DE5CB4 /* Recive.m */; };
+		272496A01C8439370049EEC9 /* 气压启动画面.png in Resources */ = {isa = PBXBuildFile; fileRef = 2724969E1C8439370049EEC9 /* 气压启动画面.png */; };
+		272496A31C84394E0049EEC9 /* 气压启动画面@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 272496A21C84394E0049EEC9 /* 气压启动画面@2x.png */; };
+		272496A51C843D6F0049EEC9 /* Icon-120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 272496A41C843D6F0049EEC9 /* Icon-120@2x.png */; };
+		272496A71C843F6C0049EEC9 /* icon-80@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 272496A61C843F6C0049EEC9 /* icon-80@2x.png */; };
 		2758D0E01C83F4F700F1AF5B /* default in Resources */ = {isa = PBXBuildFile; fileRef = 2758D0DF1C83F4F700F1AF5B /* default */; };
 		276D09101C06ABAF004921C0 /* IMG_0035.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 276D090F1C06ABAF004921C0 /* IMG_0035.jpg */; };
 		276D09131C06B11B004921C0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 276D09121C06B11B004921C0 /* MBProgressHUD.m */; };
@@ -44,6 +48,10 @@
 /* Begin PBXFileReference section */
 		271737F31C1EE67100DE5CB4 /* Recive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Recive.h; sourceTree = "<group>"; };
 		271737F41C1EE67100DE5CB4 /* Recive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Recive.m; sourceTree = "<group>"; };
+		2724969E1C8439370049EEC9 /* 气压启动画面.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "气压启动画面.png"; sourceTree = "<group>"; };
+		272496A21C84394E0049EEC9 /* 气压启动画面@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "气压启动画面@2x.png"; sourceTree = "<group>"; };
+		272496A41C843D6F0049EEC9 /* Icon-120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120@2x.png"; sourceTree = "<group>"; };
+		272496A61C843F6C0049EEC9 /* icon-80@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-80@2x.png"; sourceTree = "<group>"; };
 		2758D0DF1C83F4F700F1AF5B /* default */ = {isa = PBXFileReference; lastKnownFileType = file; path = default; sourceTree = "<group>"; };
 		276D090F1C06ABAF004921C0 /* IMG_0035.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0035.jpg; sourceTree = "<group>"; };
 		276D09111C06B11B004921C0 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
@@ -56,7 +64,7 @@
 		27DB8E931C03E89700752823 /* StateMonitorList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = StateMonitorList.plist; sourceTree = "<group>"; };
 		27DB8E951C03ECEC00752823 /* managedObjectConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = managedObjectConfiguration.h; sourceTree = "<group>"; };
 		27DB8E961C03ECEC00752823 /* managedObjectConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = managedObjectConfiguration.m; sourceTree = "<group>"; };
-		27DCD7C71BF5E0E700201075 /* PneumaticController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PneumaticController.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		27DCD7C71BF5E0E700201075 /* 气压控制.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "气压控制.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		27DCD7CB1BF5E0E700201075 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		27DCD7CD1BF5E0E700201075 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = PneumaticController/AppDelegate.h; sourceTree = "<group>"; };
 		27DCD7CE1BF5E0E700201075 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = PneumaticController/AppDelegate.m; sourceTree = "<group>"; };
@@ -155,7 +163,7 @@
 		27DCD7C81BF5E0E700201075 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				27DCD7C71BF5E0E700201075 /* PneumaticController.app */,
+				27DCD7C71BF5E0E700201075 /* 气压控制.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -184,7 +192,11 @@
 		27DCD7CA1BF5E0E700201075 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				272496A41C843D6F0049EEC9 /* Icon-120@2x.png */,
+				272496A61C843F6C0049EEC9 /* icon-80@2x.png */,
 				2758D0DF1C83F4F700F1AF5B /* default */,
+				2724969E1C8439370049EEC9 /* 气压启动画面.png */,
+				272496A21C84394E0049EEC9 /* 气压启动画面@2x.png */,
 				27ADA3271BFF097D0019B430 /* photo.jpeg */,
 				276D090F1C06ABAF004921C0 /* IMG_0035.jpg */,
 				27F5A6181C05D07400BD4C61 /* 黑色按钮.png */,
@@ -268,9 +280,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		27DCD7C61BF5E0E700201075 /* PneumaticController */ = {
+		27DCD7C61BF5E0E700201075 /* 气压控制 */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 27DCD7E11BF5E0E700201075 /* Build configuration list for PBXNativeTarget "PneumaticController" */;
+			buildConfigurationList = 27DCD7E11BF5E0E700201075 /* Build configuration list for PBXNativeTarget "气压控制" */;
 			buildPhases = (
 				27DCD7C31BF5E0E700201075 /* Sources */,
 				27DCD7C41BF5E0E700201075 /* Frameworks */,
@@ -280,9 +292,9 @@
 			);
 			dependencies = (
 			);
-			name = PneumaticController;
+			name = "气压控制";
 			productName = PneumaticController;
-			productReference = 27DCD7C71BF5E0E700201075 /* PneumaticController.app */;
+			productReference = 27DCD7C71BF5E0E700201075 /* 气压控制.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -300,7 +312,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 27DCD7C21BF5E0E700201075 /* Build configuration list for PBXProject "PneumaticController" */;
+			buildConfigurationList = 27DCD7C21BF5E0E700201075 /* Build configuration list for PBXProject "气压控制" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -313,7 +325,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				27DCD7C61BF5E0E700201075 /* PneumaticController */,
+				27DCD7C61BF5E0E700201075 /* 气压控制 */,
 			);
 		};
 /* End PBXProject section */
@@ -325,13 +337,17 @@
 			files = (
 				2758D0E01C83F4F700F1AF5B /* default in Resources */,
 				27F5A6171C05CFE400BD4C61 /* 红色按钮.jpg in Resources */,
+				272496A71C843F6C0049EEC9 /* icon-80@2x.png in Resources */,
 				27ADA3281BFF097D0019B430 /* photo.jpeg in Resources */,
+				272496A01C8439370049EEC9 /* 气压启动画面.png in Resources */,
 				27DCD7DD1BF5E0E700201075 /* LaunchScreen.storyboard in Resources */,
 				27DCD7DA1BF5E0E700201075 /* Assets.xcassets in Resources */,
 				27FE65DF1C0FE90E003EC968 /* AutoModeTableList.plist in Resources */,
 				27DCD7D81BF5E0E700201075 /* Main.storyboard in Resources */,
 				27F5A6191C05D07400BD4C61 /* 黑色按钮.png in Resources */,
+				272496A31C84394E0049EEC9 /* 气压启动画面@2x.png in Resources */,
 				27DB8E941C03E89700752823 /* StateMonitorList.plist in Resources */,
+				272496A51C843D6F0049EEC9 /* Icon-120@2x.png in Resources */,
 				276D09101C06ABAF004921C0 /* IMG_0035.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -474,12 +490,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PneumaticController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController.test;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "气压控制";
 			};
 			name = Debug;
 		};
@@ -487,19 +504,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = PneumaticController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController.test;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "气压控制";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		27DCD7C21BF5E0E700201075 /* Build configuration list for PBXProject "PneumaticController" */ = {
+		27DCD7C21BF5E0E700201075 /* Build configuration list for PBXProject "气压控制" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				27DCD7DF1BF5E0E700201075 /* Debug */,
@@ -508,7 +526,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		27DCD7E11BF5E0E700201075 /* Build configuration list for PBXNativeTarget "PneumaticController" */ = {
+		27DCD7E11BF5E0E700201075 /* Build configuration list for PBXNativeTarget "气压控制" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				27DCD7E21BF5E0E700201075 /* Debug */,
