@@ -10,16 +10,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "XTSSocketController.h"
 
-@interface SecondViewController : UIViewController
-
-@property (weak, nonatomic) IBOutlet UIImageView *photoImage;
-@property (weak, nonatomic) IBOutlet UILabel *photoTime;
-@property (weak, nonatomic) IBOutlet UIButton *updatePhoto;
-@property (strong, nonatomic) UIImage *image;
-@property (strong, nonatomic) UIImage *defaultImage;
-
-- (IBAction)updatePhotoDate:(id)sender;
-
+@interface SecondViewController : UIViewController <XTSSocketControllerStreamEventDataProcessDelegate,XTSSocketControllerStreamEventErrorOccurredDelegate>
 @end
 

@@ -42,7 +42,7 @@
 
 @interface StateMonitorTableViewController (){
     MBProgressHUD *HUD; //菊花
-    UIRefreshControl *refreshControl;
+    //UIRefreshControl *refreshControl;
 }
 //@property (nonatomic,strong) ;
 @property (nonatomic, strong, readonly) NSFetchedResultsController *fetchedResultController;
@@ -51,7 +51,7 @@
 @end
 
 @implementation StateMonitorTableViewController
-@synthesize fetchedResultController=_fetchedResultController;
+@synthesize fetchedResultController = _fetchedResultController;
 //@synthesize refreshControl=_refreshControl;
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -83,6 +83,13 @@
         }
     }
     [self setSocketJOSNKeyAndCoreDataKeyPair];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (self.refreshControl != nil) {
+        NSLog(@"%d", self.refreshControl.refreshing);
+    }
 }
 
 -(void)setSocketJOSNKeyAndCoreDataKeyPair{
@@ -150,13 +157,13 @@
 
 -(void)refreshState{
     //NSLog(@"%lu",[[self.fetchedResultController fetchedObjects] count]);
-    NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
-    NSString *ip=[userDefaults valueForKey:kIPAdressKey];
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *ip = [userDefaults valueForKey:kIPAdressKey];
    // temp isEqualToString:<#(nonnull NSString *)#>
    // NSLog(@"ip:%d",temp.length);
-    if (ip.length==0) {
-        UIAlertController *alertView=[UIAlertController alertControllerWithTitle:@"刷新失败" message:@"请先设置你的服务器ip" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+    if (ip.length == 0) {
+        UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"刷新失败" message:@"请先设置你的服务器ip" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
             [self.refreshControl endRefreshing];
         }];
         [alertView addAction:okAction];
@@ -170,15 +177,15 @@
     }*/
     
     //XTSSocketController *socketer=[[XTSSocketController alloc] init];
-    if (self.socketer==nil) {
-       self.socketer=[[XTSSocketController alloc] init];
+    if (self.socketer == nil) {
+       self.socketer = [[XTSSocketController alloc] init];
     }
-    self.socketer.flag=1;
+    self.socketer.flag = 1;
     //char *str="hello world!";
     //NSNumber *pressure=[[NSNumber alloc] initWithFloat:105.0];
     //NSNumber *timeout=[[NSNumber alloc] initWithChar:5];
     NSDictionary *keysAndValues;//=[NSDictionary dictionaryWithObjectsAndKeys:pressure,@"pressure",timeout,@"timeout", nil];
-    XTSDataMode mode=XTSDataStateRequireMode;
+    XTSDataMode mode = XTSDataStateRequireMode;
     //NSMutableData *sendeData=[[NSData alloc] init];
     //soketer.sendData=sendeData;
     _socketer.errorDelegate=self;
@@ -454,7 +461,12 @@
 
 -(void)streamDataRecvSuccess:(NSData *)data{
     NSError *error_check_json;
-    NSDictionary *revData=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error_check_json];
+    //此段为测试代码，成功后请替换原代码
+    NSString *rowStr = [[NSString alloc] initWithData: data encoding:NSUTF8StringEncoding];
+    NSDictionary *revData = [NSJSONSerialization JSONObjectWithData: [[rowStr stringByReplacingOccurrencesOfString:@"'" withString:@"\""] dataUsingEncoding:NSUTF8StringEncoding] options: NSJSONReadingMutableContainers error: &error_check_json];
+    /*
+    NSDictionary *revData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error_check_json];
+     */
     NSDictionary *state=[revData objectForKey:@"state"];
     NSManagedObject *object=[[self.fetchedResultController fetchedObjects] lastObject];
     

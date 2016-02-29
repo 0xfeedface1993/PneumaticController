@@ -20,12 +20,12 @@
 @implementation XTSSocketController
 
 -(void)initNetworkCommunication:(NSDictionary *)data  hostIP:(NSString * )hostIP{
-    self.Host_IP=hostIP;
+    self.Host_IP = hostIP;
     
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;
 
-    CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)self.Host_IP, 10000,&readStream, &writeStream);
+    CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)self.Host_IP, 6002,&readStream, &writeStream);
     
     
     _inputStream = (__bridge_transfer NSStream *)readStream;
@@ -41,9 +41,9 @@
     [_outputStream open];
     
     _ConnectOverTimer = YES;
-    _delayTime=5.0;
-    _isFirstFourBytes=YES;
-    self.flag=RECV;
+    _delayTime = 5.0;
+    _isFirstFourBytes = YES;
+    self.flag = RECV;
     [self performSelector:@selector(checkConnectOverTime) withObject:nil afterDelay:_delayTime];
 }
 /*
@@ -61,13 +61,16 @@
     
     switch (mode) {
         case XTSDataAutoMode:
-            jsonDictionary=[NSDictionary dictionaryWithObjectsAndKeys:data,@"auto",nil];
+            jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:data,@"auto",nil];
             break;
         case XTSDataManuelMode:
-            jsonDictionary=[NSDictionary dictionaryWithObjectsAndKeys:data,@"hand",nil];
+            jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:data,@"hand",nil];
             break;
         case XTSDataStateRequireMode:
-            jsonDictionary=[NSDictionary dictionaryWithObjectsAndKeys:@"ok",@"state",nil];
+            jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"ok",@"state",nil];
+            break;
+        case XTSDataPhotoMode:
+            jsonDictionary = data;
             break;
         default:
             break;
@@ -75,15 +78,12 @@
     
     if ([NSJSONSerialization isValidJSONObject:jsonDictionary]) {
         postData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error:&error_json];
-        dataLenthg=[postData length];
-        allData=[[NSMutableData alloc] initWithBytes:&dataLenthg length:sizeof(UInt32)];
-        [allData appendData:postData];
-        self.sendData=allData;
-        self.flag=SEND;
-        //char fisrt4Data[4];
-        //[self.sendData getBytes:&fisrt4Data length:4];
-        
-        //NSLog(@"Fisrt 4 data: 0x%x 0x%x 0x%x 0x%x",fisrt4Data[0],fisrt4Data[1],fisrt4Data[2],fisrt4Data[3]);
+        dataLenthg = [postData length];
+        allData = [[NSMutableData alloc] initWithBytes:&dataLenthg length:sizeof(UInt32)];
+        [allData appendData: postData];
+        NSLog(@"send data: %@", allData);
+        self.sendData = allData;
+        self.flag = SEND;
         
         return YES;
     }
@@ -113,81 +113,49 @@
             
         case NSStreamEventHasBytesAvailable:
             event=@"NSStreamEventHasBytesAvailable";
-            /*
-            if (_flag==RECV&&aStream==_inputStream) {
-                NSMutableData *input=[[NSMutableData alloc] init];
-                uint8_t buffer[1024];
-                int len=1024;
-                while ([_inputStream hasBytesAvailable]) {
-                    len=[_inputStream read:buffer maxLength:len];
-                    if (len>0) {
-                        [input appendBytes:buffer length:len];
-                    }
-                }
-                self.recverData=input;
-                NSError *error_check_json;
-                NSDictionary *revData=[NSJSONSerialization JSONObjectWithData:self.recverData options:NSJSONReadingMutableContainers error:&error_check_json];
-                NSLog(@"%@",revData);
-                self.recverData=nil;
-                
-            }*/
-            
-            //if (_flag==RECV) {
-                if(_isFirstFourBytes)//读取前4个字节，算出数据包大小
+            if(_isFirstFourBytes)//读取前4个字节，算出数据包大小
+            {
+                uint8_t bufferLen[4];
+                if([_inputStream read:bufferLen maxLength:4] == 4)
                 {
-                    uint8_t bufferLen[4];
-                    if([_inputStream read:bufferLen maxLength:4] == 4)
-                    {
-                        NSLog(@"4 bytes: %x %x %x %x",bufferLen[0],bufferLen[1],bufferLen[2],bufferLen[3]);
-                        _remainingToRead = ((bufferLen[3]<<24)&0xff000000)+((bufferLen[2]<<16)&0xff0000)+((bufferLen[1]<<8)&0xff00)+(bufferLen[0] & 0xff);
-                        _isFirstFourBytes = NO;
-                    }
-                    else
-                    {
-                        [self close];
-                        //Error Control
-                    }
-                }else{
-                    uint8_t buffer[32768];
-                    int len=32768;
-                    if (self.recverData==nil) {
-                        self.recverData=[[NSMutableData alloc] init];
-                    }
-                    int actuallyRead;
-                    actuallyRead = [_inputStream read:buffer maxLength:sizeof(buffer)];
-                    if(actuallyRead == -1){
-                        [self close];
-                        //Error Control
-                    }else if(actuallyRead == 0){
-                        //Do something if you want
-                    }else{
-                        [self.recverData appendBytes:buffer length:actuallyRead];
-                        _remainingToRead -= actuallyRead;
-                        //NSData *datax=[NSData dataWithBytes:& length:<#(NSUInteger)#>];
-                       // NSLog(@"recve data %@",self.recverData);
-                    }
-                    
-                    if(_remainingToRead == 0)
-                    {
-                        _isFirstFourBytes = YES;
-                        //[self manageData:dataBuffer];//数据接收完毕，把数据送回调用sream的函数
-                        //NSError *error_check_json;
-                       // NSDictionary *revData=[NSJSONSerialization JSONObjectWithData:self.recverData options:NSJSONReadingMutableContainers error:&error_check_json];
-                        //NSLog(@"%@",revData);
-                        //NSNumber *pressure=[revData valueForKey:@"pressure"];//@"pressure",timeout,@"timeout"
-                        //NSNumber *timeout=[revData valueForKey:@"timeout"];
-                        //NSNumber *pressure=[[revData objectForKey:@"hand"] objectForKey:@"pressure"];
-                        //NSNumber *timeout=[[revData objectForKey:@"hand"] objectForKey:@"timeout"];
-                        //
-                        
-                        //NSLog(@"pressure : %@ timeout: %@",pressure,timeout);
-                        [self.dataDelegate streamDataRecvSuccess:self.recverData];
-                        self.recverData=nil;
-                    }
+                    NSLog(@"4 bytes: %x %x %x %x",bufferLen[0],bufferLen[1],bufferLen[2],bufferLen[3]);
+                    _remainingToRead = ((bufferLen[3]<<24)&0xff000000)+((bufferLen[2]<<16)&0xff0000)+((bufferLen[1]<<8)&0xff00)+(bufferLen[0] & 0xff);
+                    _isFirstFourBytes = NO;
                 }
-
-            //}
-                        break;
+                else
+                {
+                    [self close];
+                    //Error Control
+                }
+            }else{
+                uint8_t buffer[32768];
+                int len = 32768;
+                if (self.recverData == nil) {
+                    self.recverData = [[NSMutableData alloc] init];
+                }
+                int actuallyRead;
+                actuallyRead = [_inputStream read:buffer maxLength:sizeof(buffer)];
+                if(actuallyRead == -1){
+                    [self close];
+                    //Error Control
+                }else if(actuallyRead == 0){
+                    //Do something if you want
+                }else{
+                    [self.recverData appendBytes:buffer length:actuallyRead];
+                    _remainingToRead -= actuallyRead;
+                    NSLog(@"recve data %s", buffer);
+                }
+                    
+                if(_remainingToRead == 0)
+                {
+                    [self.dataDelegate streamDataRecvSuccess:self.recverData];
+                    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^() {
+                        NSLog(@"rev data : %@", self.recverData);
+                    });
+                    _isFirstFourBytes = YES;
+                    self.recverData = nil;
+                }
+            }
             
         case NSStreamEventHasSpaceAvailable:
             event=@"NSStreamEventHasSpaceAvailable";
@@ -198,10 +166,11 @@
                 [_outputStream write:[self.sendData bytes] maxLength:bytesLength];
                 [_outputStream close];
                 free(buffer);
-            }*/
+            }
+             */
             [self canclCheckConnectOverTimer];
             
-            if (self.flag==SEND) {
+            if (self.flag == SEND) {
                 //uint8_t *sendbuf;
                 NSInteger left = [self.sendData length];
                 int count = 0;
@@ -210,6 +179,7 @@
                 {
                     if ([_outputStream hasSpaceAvailable] == NO) //如果发送缓存已满，暂停0。1秒
                     {
+                        NSLog(@"outputStream buffer full!");
                         [NSThread sleepForTimeInterval:0.1];
                         continue;
                     }
@@ -233,9 +203,7 @@
                     count += n;
                     left -= n;
                 }
-                self.flag=RECV;
-                //[self close];
-                
+                self.flag = RECV;
             }
             
             break;
@@ -328,6 +296,10 @@
         }
         case XTSDataStateRequireMode: {
             jsonDictionary=[NSDictionary dictionaryWithObjectsAndKeys:@"ok",@"state", nil];
+            break;
+        }
+        case XTSDataPhotoMode: {
+            jsonDictionary=[NSDictionary dictionaryWithObjectsAndKeys:@"photo",@"photo", nil];
             break;
         }
             

@@ -16,12 +16,13 @@
 #define SEND 1
 #define RECV 0
 
-static NSString *HOST_IP=@"10.88.132.125";
+static NSString *HOST_IP = @"10.88.132.125";
 
 typedef NS_ENUM(NSInteger,XTSDataMode){
   XTSDataAutoMode,
   XTSDataManuelMode,
-  XTSDataStateRequireMode
+  XTSDataStateRequireMode,
+  XTSDataPhotoMode
 };
 
 @protocol XTSSocketControllerStreamEventErrorOccurredDelegate <NSObject>
