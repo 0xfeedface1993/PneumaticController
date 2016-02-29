@@ -147,12 +147,10 @@ enum TextFieldType{
         return;
     }
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    [self.view addSubview:HUD];
-//    HUD.delegate = self;
+    [self.navigationController.view addSubview:HUD];
     HUD.labelText = @"正在上传";
     HUD.dimBackground = YES;
     [HUD show:YES];
-    //[HUD showWhileExecuting:@selector(packDataUp) onTarget:self withObject:nil animated:YES];
     [self packDataUp];
 }
 
