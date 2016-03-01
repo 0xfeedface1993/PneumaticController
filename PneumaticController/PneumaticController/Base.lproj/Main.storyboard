@@ -38,7 +38,7 @@
         <scene sceneID="PTu-vI-Oap">
             <objects>
                 <navigationController id="pHc-20-AsV" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="状态监测" image="first" id="QVr-wR-206"/>
+                    <tabBarItem key="tabBarItem" title="状态监测" image="iconfont-shishijiance-2.png" id="QVr-wR-206"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="i9j-eD-vC5">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -129,7 +129,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="实时图像" image="first" id="cPa-gy-q4n"/>
+                    <tabBarItem key="tabBarItem" title="实时图像" image="iconfont-paishe.png" id="cPa-gy-q4n"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="photoImage" destination="Fo3-Ie-8P3" id="tNr-wF-UI5"/>
@@ -207,7 +207,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="示值指定" image="first" id="H7w-qF-sOo"/>
+                    <tabBarItem key="tabBarItem" title="示值指定" image="iconfont-diaojie.png" id="H7w-qF-sOo"/>
                     <connections>
                         <outletCollection property="modifyButtons" destination="uGC-aA-MmL" id="lNE-Pc-5r8"/>
                         <outletCollection property="labels" destination="WHX-Qk-zj0" id="gb3-Xh-vdz"/>
@@ -221,6 +221,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="first" width="30" height="30"/>
+        <image name="iconfont-diaojie.png" width="64" height="64"/>
+        <image name="iconfont-paishe.png" width="64" height="64"/>
+        <image name="iconfont-shishijiance-2.png" width="64" height="64"/>
     </resources>
 </document>

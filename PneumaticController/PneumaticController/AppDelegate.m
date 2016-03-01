@@ -128,4 +128,17 @@
     }
 }
 
+
+#pragma mark -  获取当前屏幕中present出来的viewcontroller
++ (UIViewController *)getCurrentVC
+{
+    UIViewController *appRootVC = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *topVC = appRootVC;
+    if (topVC.presentedViewController) {
+        topVC = topVC.presentedViewController;
+    }
+    
+    return topVC;
+}
+
 @end

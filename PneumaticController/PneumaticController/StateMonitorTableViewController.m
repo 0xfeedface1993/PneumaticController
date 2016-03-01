@@ -156,41 +156,30 @@
 }
 
 -(void)refreshState{
-    //NSLog(@"%lu",[[self.fetchedResultController fetchedObjects] count]);
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSString *ip = [userDefaults valueForKey:kIPAdressKey];
-   // temp isEqualToString:<#(nonnull NSString *)#>
-   // NSLog(@"ip:%d",temp.length);
+
     if (ip.length == 0) {
         UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"刷新失败" message:@"请先设置你的服务器ip" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
             [self.refreshControl endRefreshing];
         }];
         [alertView addAction:okAction];
-        [self presentViewController:alertView animated:YES completion:nil];
+        [[AppDelegate getCurrentVC] presentViewController:alertView animated:YES completion:nil];
         
         return;
     }
-    /*if (![self initDefaultsState]) {
-        NSLog(@"initDefaultsState failed!");
-        return ;
-    }*/
-    
-    //XTSSocketController *socketer=[[XTSSocketController alloc] init];
+
     if (self.socketer == nil) {
        self.socketer = [[XTSSocketController alloc] init];
     }
     self.socketer.flag = 1;
-    //char *str="hello world!";
-    //NSNumber *pressure=[[NSNumber alloc] initWithFloat:105.0];
-    //NSNumber *timeout=[[NSNumber alloc] initWithChar:5];
-    NSDictionary *keysAndValues;//=[NSDictionary dictionaryWithObjectsAndKeys:pressure,@"pressure",timeout,@"timeout", nil];
+
+    NSDictionary *keysAndValues;
     XTSDataMode mode = XTSDataStateRequireMode;
-    //NSMutableData *sendeData=[[NSData alloc] init];
-    //soketer.sendData=sendeData;
     _socketer.errorDelegate=self;
     _socketer.dataDelegate=self;
-    //self.socketer=soketer;
+
     [_socketer initNetworkCommunication:keysAndValues hostIP:ip];
     if (![_socketer sendDataWithMode:mode dataPack:keysAndValues]) {
         NSLog(@"set send data failed!");
@@ -443,7 +432,7 @@
             //[self.refreshControl endRefreshing];
         }];
         [alertView addAction:okAction];
-        [self presentViewController:alertView animated:YES completion:nil];
+        [[AppDelegate getCurrentVC] presentViewController:alertView animated:YES completion:nil];
     }
     [self.refreshControl endRefreshing];
 }
@@ -490,7 +479,7 @@
             //[self.refreshControl endRefreshing];
         }];
         [alertView addAction:okAction];
-        [self presentViewController:alertView animated:YES completion:nil];
+        [[AppDelegate getCurrentVC] presentViewController:alertView animated:YES completion:nil];
     }
     [self.tableView reloadData];
     [self.refreshControl endRefreshing];

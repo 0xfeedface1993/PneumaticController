@@ -13,6 +13,9 @@
 		272496A51C843D6F0049EEC9 /* Icon-120@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 272496A41C843D6F0049EEC9 /* Icon-120@2x.png */; };
 		272496A71C843F6C0049EEC9 /* icon-80@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 272496A61C843F6C0049EEC9 /* icon-80@2x.png */; };
 		2758D0E01C83F4F700F1AF5B /* default in Resources */ = {isa = PBXBuildFile; fileRef = 2758D0DF1C83F4F700F1AF5B /* default */; };
+		27604AC01C8530E500180AFF /* iconfont-diaojie@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27604ABD1C8530E500180AFF /* iconfont-diaojie@2x.png */; };
+		27604AC11C8530E500180AFF /* iconfont-paishe@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27604ABE1C8530E500180AFF /* iconfont-paishe@2x.png */; };
+		27604AC21C8530E500180AFF /* iconfont-shishijiance-2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 27604ABF1C8530E500180AFF /* iconfont-shishijiance-2@2x.png */; };
 		276D09101C06ABAF004921C0 /* IMG_0035.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 276D090F1C06ABAF004921C0 /* IMG_0035.jpg */; };
 		276D09131C06B11B004921C0 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 276D09121C06B11B004921C0 /* MBProgressHUD.m */; };
 		27ADA3261BFED1180019B430 /* XTSHTTPController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ADA3251BFED1180019B430 /* XTSHTTPController.m */; };
@@ -53,6 +56,9 @@
 		272496A41C843D6F0049EEC9 /* Icon-120@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-120@2x.png"; sourceTree = "<group>"; };
 		272496A61C843F6C0049EEC9 /* icon-80@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-80@2x.png"; sourceTree = "<group>"; };
 		2758D0DF1C83F4F700F1AF5B /* default */ = {isa = PBXFileReference; lastKnownFileType = file; path = default; sourceTree = "<group>"; };
+		27604ABD1C8530E500180AFF /* iconfont-diaojie@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfont-diaojie@2x.png"; sourceTree = "<group>"; };
+		27604ABE1C8530E500180AFF /* iconfont-paishe@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfont-paishe@2x.png"; sourceTree = "<group>"; };
+		27604ABF1C8530E500180AFF /* iconfont-shishijiance-2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iconfont-shishijiance-2@2x.png"; sourceTree = "<group>"; };
 		276D090F1C06ABAF004921C0 /* IMG_0035.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = IMG_0035.jpg; sourceTree = "<group>"; };
 		276D09111C06B11B004921C0 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		276D09121C06B11B004921C0 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
@@ -192,6 +198,9 @@
 		27DCD7CA1BF5E0E700201075 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				27604ABD1C8530E500180AFF /* iconfont-diaojie@2x.png */,
+				27604ABE1C8530E500180AFF /* iconfont-paishe@2x.png */,
+				27604ABF1C8530E500180AFF /* iconfont-shishijiance-2@2x.png */,
 				272496A41C843D6F0049EEC9 /* Icon-120@2x.png */,
 				272496A61C843F6C0049EEC9 /* icon-80@2x.png */,
 				2758D0DF1C83F4F700F1AF5B /* default */,
@@ -336,6 +345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2758D0E01C83F4F700F1AF5B /* default in Resources */,
+				27604AC21C8530E500180AFF /* iconfont-shishijiance-2@2x.png in Resources */,
 				27F5A6171C05CFE400BD4C61 /* 红色按钮.jpg in Resources */,
 				272496A71C843F6C0049EEC9 /* icon-80@2x.png in Resources */,
 				27ADA3281BFF097D0019B430 /* photo.jpeg in Resources */,
@@ -348,7 +358,9 @@
 				272496A31C84394E0049EEC9 /* 气压启动画面@2x.png in Resources */,
 				27DB8E941C03E89700752823 /* StateMonitorList.plist in Resources */,
 				272496A51C843D6F0049EEC9 /* Icon-120@2x.png in Resources */,
+				27604AC11C8530E500180AFF /* iconfont-paishe@2x.png in Resources */,
 				276D09101C06ABAF004921C0 /* IMG_0035.jpg in Resources */,
+				27604AC01C8530E500180AFF /* iconfont-diaojie@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

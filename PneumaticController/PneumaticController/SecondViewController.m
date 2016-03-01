@@ -10,14 +10,18 @@
 #import "XTSHTTPController.h"
 #import "JTSImageInfo.h"
 #import "JTSImageViewController.h"
+#import "AppDelegate.h"
 #import <ImageIO/ImageIO.h>
 
 @interface SecondViewController ()
 @property (strong, nonatomic) XTSSocketController *socker;
 @property (weak, nonatomic) IBOutlet UIImageView *photoImage;
 @property (weak, nonatomic) IBOutlet UILabel *photoTime;
+@property (strong, nonatomic) UIButton *button;
 @property (strong, nonatomic) UIImage *image;
 @property (strong, nonatomic) UIImage *defaultImage;
+@property (assign, nonatomic) CGPoint startPotint;
+@property (assign, nonatomic) CGPoint endPotint;
 @end
 
 @implementation SecondViewController
@@ -34,11 +38,16 @@
 
     UIButton *refreshBtn = [[UIButton alloc] initWithFrame:CGRectMake(250, 20, 60, 60)];
     refreshBtn.layer.cornerRadius = refreshBtn.frame.size.height/2;
-    refreshBtn.backgroundColor = [UIColor redColor];
+    refreshBtn.layer.masksToBounds = YES;
     refreshBtn.tintColor = [UIColor whiteColor];
-    //refreshBtn.titleLabel.textColor = [UIColor whiteColor];
-    [refreshBtn setTitle:[NSString stringWithFormat:@"无时间"] forState:UIControlStateNormal];
-    [refreshBtn addTarget:self action:@selector(updatePhoto) forControlEvents:UIControlEventTouchUpInside];
+    [refreshBtn setBackgroundImage:[self createImageWithColor:[UIColor yellowColor]] forState:UIControlStateSelected];
+    [refreshBtn setBackgroundImage:[self createImageWithColor:[UIColor redColor]] forState:UIControlStateNormal];
+    [refreshBtn setTitle:[NSString stringWithFormat:@"更新"] forState:UIControlStateNormal];
+    UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(updatePhoto:)];
+    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveButton:)];
+    [refreshBtn addGestureRecognizer:panGesture];
+    [refreshBtn addGestureRecognizer:tapGesture];
+    self.button = refreshBtn;
     [self.view addSubview:refreshBtn];
 }
 
@@ -76,27 +85,49 @@
 
 #pragma mark - 点击按钮下载图片
 
-- (void)updatePhoto {
-    self.photoImage.image = self.defaultImage;
+- (void)updatePhoto:(UITapGestureRecognizer *)tap {
     
-    if (self.socker == nil) {
-        self.socker = [[XTSSocketController alloc] init];
-        self.socker.flag = 1;
-        self.socker.errorDelegate = self;
-        self.socker.dataDelegate = self;
-        NSString *ip = [[NSUserDefaults standardUserDefaults] valueForKey: @"ip"];
-        [self.socker initNetworkCommunication: nil hostIP: ip];
+    UIGestureRecognizerState state = tap.state;
+    
+    switch (state) {
+        case UIGestureRecognizerStateEnded: {
+            self.button.hidden = YES;
+            self.photoImage.image = self.defaultImage;
+            NSString *ip = [[NSUserDefaults standardUserDefaults] valueForKey: @"ip"];
+            
+            if (self.socker == nil && ip.length > 0) {
+                self.socker = [[XTSSocketController alloc] init];
+                self.socker.flag = 1;
+                self.socker.errorDelegate = self;
+                self.socker.dataDelegate = self;
+                [self.socker initNetworkCommunication: nil hostIP: ip];
+                NSDictionary *dataPack = [self.socker packSendData: nil WithMode: XTSDataPhotoMode];
+                if (![self.socker sendDataWithMode: XTSDataPhotoMode dataPack: dataPack]) {
+                    NSLog(@"upload failed!");
+                }
+            }
+            
+            if (ip.length == 0) {
+                UIAlertController *alertView = [UIAlertController alertControllerWithTitle:nil message:@"请设置你的服务器ip" preferredStyle:UIAlertControllerStyleAlert];
+                UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+                    
+                }];
+                [alertView addAction:okAction];
+                [self presentViewController:alertView animated:YES completion:^(){
+                    self.button.hidden = NO;
+                }];
+            }
+            break;
+        }
+            
+        default:
+            break;
     }
-    
-    NSDictionary *dataPack = [self.socker packSendData: nil WithMode: XTSDataPhotoMode];
-    if (![self.socker sendDataWithMode: XTSDataPhotoMode dataPack: dataPack]) {
-        NSLog(@"upload failed!");
-    }
-    
 }
 
 #pragma mark - 点击图片
 - (void)showPhoto:(UITapGestureRecognizer *)tap{
+    
     UIImageView *imageView = (UIImageView *)tap.view;
     JTSImageInfo *imageInfo = [[JTSImageInfo alloc] init];
     imageInfo.image = imageView.image;
@@ -116,13 +147,18 @@
 
 -(void)streamEventErrorOccurredAction:(NSError *)error type:(NSString *)type{
     if ([type isEqualToString:@"NetEventConnectOverTime"]) {
-        UIAlertController *alertView=[UIAlertController alertControllerWithTitle:@"连接服务器超时" message:@"请检查你的网络和服务器ip" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+        UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"连接服务器超时" message:@"请检查你的网络和服务器ip" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
             
         }];
         [alertView addAction:okAction];
-        [self presentViewController:alertView animated:YES completion:nil];
+        
+        [[AppDelegate getCurrentVC] presentViewController:alertView animated:YES completion:^(){
+            [self closeSocket];
+        }];
+        
     }
+    self.button.hidden = NO;
 }
 
 -(void)streamEventOpenSucces{
@@ -131,6 +167,8 @@
 
 -(void)streamEventClose{
     NSLog(@"Stream Close！");
+    //[self closeSocket];
+    //self.button.hidden = NO;
     //[self.refreshControl endRefreshing];
 }
 
@@ -143,12 +181,77 @@
         dispatch_async(dispatch_get_main_queue(), ^() {
             self.photoImage.image = [UIImage imageWithData:decdeData];
             [self updatePhotoTime];
+            [self closeSocket];
         });
     });
+    
+    self.button.hidden = YES;
+}
+
+#pragma mark - UIColor 转UIImage
+- (UIImage*) createImageWithColor: (UIColor*) color
+{
+    CGRect rect=CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
+}
+
+#pragma mark - 关闭socket
+- (void)closeSocket {
     //断开socker
     self.socker.errorDelegate = nil;
     self.socker.dataDelegate = nil;
     self.socker = nil;
+}
+
+#pragma mark - 拖动按钮
+
+- (void)moveButton:(UIGestureRecognizer *)recognizer{
+    NSLog(@"%@",recognizer);
+    UIGestureRecognizerState state = recognizer.state;
+    
+    switch (state) {
+        case UIGestureRecognizerStateBegan: {
+            self.startPotint = [recognizer locationInView:self.view];
+            break;
+        }
+        case UIGestureRecognizerStateChanged: {
+            
+            self.button.center = [recognizer locationInView:self.view];
+            break;
+        }
+        case UIGestureRecognizerStateEnded: {
+            self.button.center = [self checkMovePoint:[recognizer locationInView:self.view]];
+            break;
+        }
+            
+    default:
+            break;
+    }
+    
+}
+
+#pragma mark - 更新按钮不能超过边界
+- (CGPoint)checkMovePoint:(CGPoint)point {
+    if (point.x > self.view.frame.size.width - 30) {
+        point.x = self.view.frame.size.width - 30;
+    }
+    if (point.x < 30) {
+        point.x = 30;
+    }
+    if (point.y > self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height - 30) {
+        point.y = self.view.frame.size.height - self.tabBarController.tabBar.frame.size.height - 30;
+    }
+    if (point.y < 30) {
+        point.y = 30;
+    }
+    
+    return point;
 }
 
 @end
