@@ -27,8 +27,6 @@
     //(3)缓存策略
     [request setCachePolicy:NSURLRequestReturnCacheDataElseLoad];
     
-    NSError *error;
-    
     self.urlSession =  [NSURLSession sharedSession];
     
     self.sessionDataTask = [self.urlSession dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error){
@@ -39,7 +37,7 @@
              NSLog(@"data: %@", dataStr);
             
             NSError *error_check_json;
-            NSDictionary *revData=[NSJSONSerialization JSONObjectWithData:data options:NSJSONWritingPrettyPrinted error:&error_check_json];
+            NSDictionary *revData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error_check_json];
             NSLog(@"%@",revData);
           
         }else{
@@ -122,7 +120,7 @@
             if (error == nil) {
                 
                 NSError *error_check_json;
-                NSDictionary *revData=[NSJSONSerialization JSONObjectWithData:data options:NSJSONWritingPrettyPrinted error:&error_check_json];
+                NSDictionary *revData=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error_check_json];
                 NSLog(@"%@",revData);
                 
             }else{

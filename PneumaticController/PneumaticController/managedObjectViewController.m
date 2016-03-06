@@ -88,26 +88,26 @@
     
     //NSString *cellState;
     
-    NSString *cellClassname=[self.config cellClassnameForIndexPath:indexPath];
+    NSString *cellClassname = [self.config cellClassnameForIndexPath:indexPath];
     
-    XTSInfoCell *cell=[tableView dequeueReusableCellWithIdentifier:cellClassname];
+    XTSInfoCell *cell = [tableView dequeueReusableCellWithIdentifier:cellClassname];
     
     //cellState=(cell!=nil)?@"not nil":@"nil";
     
-    if (cell==nil) {
+    if (cell == nil) {
         Class cellClass=NSClassFromString(cellClassname);
         cell = [cellClass alloc];
         cell = [cell initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:cellClassname];
     }
     
-    cell.key=[self.config  attributeKeyForIndexPath:indexPath];
-    cell.textLabel.text=[self.config labelForIndexPath:indexPath];
-    cell.textLabel.textAlignment=NSTextAlignmentLeft;
+    cell.key = [self.config  attributeKeyForIndexPath:indexPath];
+    cell.textLabel.text = [self.config labelForIndexPath:indexPath];
+    cell.textLabel.textAlignment = NSTextAlignmentLeft;
     
-    NSArray *values=[self.config valuesForIndexPath:indexPath];
+    NSArray *values = [self.config valuesForIndexPath:indexPath];
     //NSLog(@"\nCell Name: \n\t\t%@\n\t\t%@\n\t\tlabel text: %@\n\t\tconfig attributeKey: %@\n\t\tvalue: %@\n",cellClassname,cellState,[self.config labelForIndexPath:indexPath],[self.config attributeKeyForIndexPath:indexPath],cell.value);
     
-    if (values!=nil) {
+    if (values != nil) {
         //[cell performSelector:@selector(setValues:) withObject:values];
     }
     
@@ -165,7 +165,7 @@
 -(void)saveManagedObjectContext{
     NSError *error;//=nil;
     if (![self.managedObject.managedObjectContext save:&error]) {
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error saving entity",@"Error savong entity")
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error saving entity",@"Error savong entity")
                                                       message:[NSString stringWithFormat:NSLocalizedString(@"Error was:%@, qutting.", @"Error was:%@, qutting.")]
                                                      delegate:self
                                             cancelButtonTitle:NSLocalizedString(@"Aw, Nuts", @"Aw, Nuts")

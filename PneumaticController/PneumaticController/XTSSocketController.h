@@ -49,7 +49,7 @@ typedef NS_ENUM(NSInteger,XTSDataMode){
 @property (strong, nonatomic) NSMutableData *recverData;
 @property (strong, nonatomic) NSMutableData *sendData;
 
--(void)initNetworkCommunication:(NSDictionary *)data hostIP:(NSString * )hostIP;
+-(void)initNetworkCommunication:(NSDictionary *)data hostIP:(NSString * )hostIP port:(NSString *)port;
 -(BOOL)sendDataWithMode:(XTSDataMode)mode dataPack:(NSDictionary *)data;
 -(BOOL)getInfomation;
 

@@ -19,17 +19,17 @@
 
 @implementation XTSSocketController
 
--(void)initNetworkCommunication:(NSDictionary *)data  hostIP:(NSString * )hostIP{
+-(void)initNetworkCommunication:(NSDictionary *)data hostIP:(NSString * )hostIP port:(NSString *)port {
     self.Host_IP = hostIP;
     
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;
 
-    CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)self.Host_IP, 6002,&readStream, &writeStream);
+    CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)self.Host_IP, (UInt32)port.integerValue,&readStream, &writeStream);
     
     
-    _inputStream = (__bridge_transfer NSStream *)readStream;
-    _outputStream = (__bridge_transfer NSStream *)writeStream;
+    _inputStream = (__bridge_transfer NSInputStream *)readStream;
+    _outputStream = (__bridge_transfer NSOutputStream *)writeStream;
     
     //NSStrea
     
@@ -64,7 +64,7 @@
             jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:data,@"auto",nil];
             break;
         case XTSDataManuelMode:
-            jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:data,@"hand",nil];
+            jsonDictionary = data;
             break;
         case XTSDataStateRequireMode:
             jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"ok",@"state",nil];
@@ -78,7 +78,7 @@
     
     if ([NSJSONSerialization isValidJSONObject:jsonDictionary]) {
         postData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error:&error_json];
-        dataLenthg = [postData length];
+        dataLenthg = (int)[postData length];
         allData = [[NSMutableData alloc] initWithBytes:&dataLenthg length:sizeof(UInt32)];
         [allData appendData: postData];
         NSLog(@"send data: %@", allData);
@@ -129,12 +129,11 @@
                 }
             }else{
                 uint8_t buffer[32768];
-                int len = 32768;
                 if (self.recverData == nil) {
                     self.recverData = [[NSMutableData alloc] init];
                 }
                 int actuallyRead;
-                actuallyRead = [_inputStream read:buffer maxLength:sizeof(buffer)];
+                actuallyRead = (int)[_inputStream read:buffer maxLength:sizeof(buffer)];
                 if(actuallyRead == -1){
                     [self close];
                     //Error Control
@@ -188,11 +187,11 @@
                     
                     if (left<MaxSend)
                     {
-                        n = [_outputStream write:[self.sendData bytes] maxLength:left];
+                        n = (int)[_outputStream write:[self.sendData bytes] maxLength:left];
                     }
                     else
                     {
-                        n = [_outputStream write:[self.sendData bytes] maxLength:MaxSend];
+                        n = (int)[_outputStream write:[self.sendData bytes] maxLength:MaxSend];
                     }
                     
                     if (n <= 0) //这地方会不会导致图片发送不完整
@@ -278,28 +277,28 @@
     NSDictionary *jsonDictionary;
     switch (mode) {
         case XTSDataAutoMode: {
-            NSMutableArray *arry=data;
+            NSMutableArray *arry = data;
             for (NSDictionary *set in arry) {
-                NSNumber *number=[set valueForKey:@"number"];
-                NSNumber *pressure=[set valueForKey:@"pressure"];
-                NSNumber *timeout=[set valueForKey:@"time"];
-                NSString *numberKey=[NSString stringWithFormat:@"item%d",[number intValue]];
+                NSNumber *number = [set valueForKey:@"number"];
+                NSNumber *pressure = [set valueForKey:@"pressure"];
+                NSNumber *timeout = [set valueForKey:@"time"];
+                NSString *numberKey = [NSString stringWithFormat:@"item%d",[number intValue]];
                 [keysAndValues setObject:[NSDictionary dictionaryWithObjectsAndKeys:pressure,@"pressure",timeout,@"timeout", nil] forKey:numberKey];
             }
-            jsonDictionary=[NSDictionary dictionaryWithObjectsAndKeys:keysAndValues,@"auto",nil];
+            jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:keysAndValues,@"auto",nil];
             break;
         }
         case XTSDataManuelMode: {
-            keysAndValues=data;
-            jsonDictionary=[NSDictionary dictionaryWithObjectsAndKeys:keysAndValues,@"hand",nil];
+            keysAndValues = data;
+            jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:keysAndValues,@"hand",nil];
             break;
         }
         case XTSDataStateRequireMode: {
-            jsonDictionary=[NSDictionary dictionaryWithObjectsAndKeys:@"ok",@"state", nil];
+            jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"ok",@"state", nil];
             break;
         }
         case XTSDataPhotoMode: {
-            jsonDictionary=[NSDictionary dictionaryWithObjectsAndKeys:@"photo",@"photo", nil];
+            jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:@"photo",@"photo", nil];
             break;
         }
             
