@@ -7,8 +7,6 @@
 //
 
 #import "ModifyViewController.h"
-//#import "AutoModeViewController.h"
-#import "XTSSocketController.h"
 
 //  要请求修改的类型，根据所需项目增减
 //
@@ -61,6 +59,15 @@ enum XTSModifyType{
 
 #pragma mark - IBAction
 
+/*
+ 1.显示警告视图，警告视图添加：
+ （1）一个文本输入框，文本输入框输入键盘限制为数字输入。
+ （2）确定键，在回调函数块中显示等待画面，并调用上传方法 sendData2Server: 上传数据，
+ 等待画面结束由错误和成功来决定
+ （3）取消键，无任何操作
+ 
+ */
+
 -(void)buttonPress:(id)sender{
     //NSLog(@"%@",sender);
     //传入的按键的tag值＝＝修改项目类型
@@ -98,7 +105,8 @@ enum XTSModifyType{
                 HUD.delegate = self;
                 HUD.labelText = @"正在设置";
                 HUD.dimBackground = YES;
-                [HUD showWhileExecuting:@selector(sendData2Server:) onTarget:self withObject:label.text animated:YES];
+                [HUD show:YES];
+                [self sendData2Server:label.text];
             }
         }
         [[NSNotificationCenter defaultCenter] removeObserver:self
@@ -166,10 +174,43 @@ enum XTSModifyType{
 
 #pragma mark - Connect Function
 
+/*
+ 
+ 通过socket发送数据到服务器，参数为用户输入的数字文本。
+ 首先
+ 1.取得服务器的ip，这里使用NSUserDefaults存储ip
+ 2.准备数据，对于非自动模式只需要准备如下的字典：
+ ｛
+ "pressure"：105.5
+ "timeout"：5
+ ｝
+ 压力值为浮点型，保压时间都是5分钟
+ 3.实例化socket，建立连接，发送数据。
+ 此时数据并没有完全符合标准，还需要转化，更多工作在socket类里面有详细说明
+ 
+ */
+
 -(void)sendData2Server:(NSString *)text{
     NSLog(@"%@\n",text);
-    [NSThread sleepForTimeInterval:3];
-    HUD.labelText = @"设置成功";
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *ip = [userDefaults valueForKey:@"ip"];
+    NSString *port = [userDefaults valueForKey:@"port"];
+    NSNumber *pressure = [[NSNumber alloc] initWithFloat:[text floatValue]];
+    NSNumber *timeout = [[NSNumber alloc] initWithChar:5];
+    NSDictionary *keysAndValues;
+    
+    XTSSocketController *soketer = [[XTSSocketController alloc] init];
+    XTSDataMode mode = XTSDataManuelMode;
+    keysAndValues = [NSDictionary dictionaryWithObjectsAndKeys:pressure,@"pressure",timeout,@"timeout", nil];
+    soketer.errorDelegate = self;
+    soketer.dataDelegate = self;
+    self.socker = soketer;
+    [self.socker initNetworkCommunication:keysAndValues hostIP:ip port:port];
+    if (![self.socker sendDataWithMode:mode dataPack:keysAndValues]) {
+        NSLog(@"send data failed!");
+    }else{
+        
+    }
 }
 
 #pragma mark - 随机颜色
@@ -247,5 +288,49 @@ enum XTSModifyType{
     return color;
 }
 
+
+#pragma mark - StreamEventErrorOccurred Delegate
+
+-(void)streamEventErrorOccurredAction:(NSError *)error type:(NSString *)type{
+    //NSLog(@"ErrorOccurred :%@ ,type: %@",[error localizedDescription],type);
+    if ([type isEqualToString:@"NetEventConnectOverTime"]) {
+        UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"连接服务器超时" message:@"请检查你的网络和服务器ip" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            
+        }];
+        [alertView addAction:okAction];
+        [self presentViewController:alertView animated:YES completion:nil];
+        [HUD hide:YES];
+    }
+}
+
+-(void)streamEventOpenSucces{
+    NSLog(@"Stream Open Succes！");
+}
+
+-(void)streamEventClose{
+    NSLog(@"Stream Close！");
+    //[self.refreshControl endRefreshing];
+    //[HUD hide:YES];
+}
+
+#pragma mark - StreamEventDataProcess Delegate
+
+-(void)streamDataRecvSuccess:(NSData *)data{
+    NSError *error_check_json;
+    if (data != nil) {
+        NSDictionary *revData = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error_check_json];
+        NSDictionary *state = [revData objectForKey:@"state"];
+        if ([[state objectForKey:@"state"]  isEqual:@"ok"]) {
+            
+        }
+        HUD.labelText = @"设置成功";
+        [NSThread sleepForTimeInterval:3];
+        [HUD hide:YES];
+    }
+    HUD.labelText = @"设置成功";
+    [NSThread sleepForTimeInterval:3];
+    [HUD hide:YES];
+}
 
 @end

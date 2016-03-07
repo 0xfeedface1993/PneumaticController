@@ -46,6 +46,7 @@
 		27FE65DD1C0FE7F1003EC968 /* AutoModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FE65DC1C0FE7F1003EC968 /* AutoModeViewController.m */; };
 		27FE65DF1C0FE90E003EC968 /* AutoModeTableList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27FE65DE1C0FE90E003EC968 /* AutoModeTableList.plist */; };
 		27FE65E21C0FF308003EC968 /* XTSAutoSetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FE65E11C0FF308003EC968 /* XTSAutoSetCell.m */; };
+		6BA9977A1C8D7BA3007174F1 /* SetHostIPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA997791C8D7BA3007174F1 /* SetHostIPViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -110,6 +111,8 @@
 		27FE65DE1C0FE90E003EC968 /* AutoModeTableList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AutoModeTableList.plist; sourceTree = "<group>"; };
 		27FE65E01C0FF308003EC968 /* XTSAutoSetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSAutoSetCell.h; sourceTree = "<group>"; };
 		27FE65E11C0FF308003EC968 /* XTSAutoSetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSAutoSetCell.m; sourceTree = "<group>"; };
+		6BA997781C8D7BA3007174F1 /* SetHostIPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetHostIPViewController.h; sourceTree = "<group>"; };
+		6BA997791C8D7BA3007174F1 /* SetHostIPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetHostIPViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +258,7 @@
 		27EE94751C77210900DD9EB2 /* 主页 */ = {
 			isa = PBXGroup;
 			children = (
+				6BA997771C8D7B63007174F1 /* 设置ip */,
 				27D6E03F1C8088E30035D6A9 /* 状态监测 */,
 				27D6E03E1C8088D80035D6A9 /* 示值指定 */,
 				27D6E03D1C8088C90035D6A9 /* 实时图像 */,
@@ -284,6 +288,15 @@
 				27ADA3251BFED1180019B430 /* XTSHTTPController.m */,
 			);
 			name = webservice;
+			sourceTree = "<group>";
+		};
+		6BA997771C8D7B63007174F1 /* 设置ip */ = {
+			isa = PBXGroup;
+			children = (
+				6BA997781C8D7BA3007174F1 /* SetHostIPViewController.h */,
+				6BA997791C8D7BA3007174F1 /* SetHostIPViewController.m */,
+			);
+			name = "设置ip";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -381,6 +394,7 @@
 				27F5A6121C05AC4B00BD4C61 /* UpDataModel.xcdatamodeld in Sources */,
 				27ADA3261BFED1180019B430 /* XTSHTTPController.m in Sources */,
 				27DCD7CF1BF5E0E700201075 /* AppDelegate.m in Sources */,
+				6BA9977A1C8D7BA3007174F1 /* SetHostIPViewController.m in Sources */,
 				27DB8E971C03ECEC00752823 /* managedObjectConfiguration.m in Sources */,
 				27DB8E911C03E66A00752823 /* StateMonitorTableViewController.m in Sources */,
 				27EE946F1C771C1500DD9EB2 /* JTSImageInfo.m in Sources */,
@@ -507,7 +521,7 @@
 				INFOPLIST_FILE = PneumaticController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController.v2;
 				PRODUCT_NAME = "气压控制";
 			};
 			name = Debug;
@@ -521,7 +535,7 @@
 				INFOPLIST_FILE = PneumaticController/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController.test;
+				PRODUCT_BUNDLE_IDENTIFIER = com.apress.PneumaticController.v2;
 				PRODUCT_NAME = "气压控制";
 			};
 			name = Release;

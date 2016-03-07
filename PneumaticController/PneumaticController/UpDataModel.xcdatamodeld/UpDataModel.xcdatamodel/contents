@@ -10,22 +10,25 @@
         <attribute name="shotmoment" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Recive" representedClassName="Recive" syncable="YES">
-        <attribute name="changerate" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="changerate" optional="YES" attributeType="Float" syncable="YES"/>
+        <attribute name="current_change_rate" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="current_target_press" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="electromagnet" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="highpressurevalve" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="lowpressurevalve" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="pressure" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="runtime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="pressure" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="remain_time" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="runtime" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
         <attribute name="stablevalve" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="stablevalvetimeout" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="systemtime" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="temperature" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="systemtime" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="temperature" optional="YES" attributeType="Float" syncable="YES"/>
         <attribute name="usb" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="vacuumpump" optional="YES" attributeType="Boolean" syncable="YES"/>
     </entity>
     <elements>
         <element name="ModeSet" positionX="-63" positionY="54" width="128" height="90"/>
-        <element name="Recive" positionX="-63" positionY="-18" width="128" height="225"/>
         <element name="PhotoTime" positionX="-63" positionY="72" width="128" height="75"/>
+        <element name="Recive" positionX="-63" positionY="-18" width="128" height="270"/>
     </elements>
 </model>

@@ -13,6 +13,7 @@
 #import "XTSSocketController.h"
 
 #define kIPAdressKey @"ip"
+#define kIPPortKey @"port"
 
 
 

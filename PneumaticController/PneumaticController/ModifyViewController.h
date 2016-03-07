@@ -10,9 +10,10 @@
 
 #import <UIKit/UIKit.h>
 #import "MBProgressHUD.h"
+#import "XTSSocketController.h"
 
 
 
-@interface ModifyViewController : UIViewController <MBProgressHUDDelegate, UITextFieldDelegate>
+@interface ModifyViewController : UIViewController <MBProgressHUDDelegate, UITextFieldDelegate, XTSSocketControllerStreamEventDataProcessDelegate, XTSSocketControllerStreamEventErrorOccurredDelegate>
 
 @end

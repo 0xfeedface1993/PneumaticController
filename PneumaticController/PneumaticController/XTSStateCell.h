@@ -14,5 +14,4 @@
 
 @interface XTSStateCell : XTSInfoCell
 @property (strong, nonatomic) UIImageView *stateImageView;
-@property (strong, nonatomic) UIImage *stateImage;
 @end

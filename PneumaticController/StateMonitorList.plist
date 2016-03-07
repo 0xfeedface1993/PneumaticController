@@ -19,7 +19,7 @@
 				</dict>
 				<dict>
 					<key>key</key>
-					<string>changerate</string>
+					<string>current_change_rate</string>
 					<key>class</key>
 					<string>XTSInfoCell</string>
 					<key>label</key>

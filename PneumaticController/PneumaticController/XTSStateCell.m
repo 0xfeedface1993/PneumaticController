@@ -28,13 +28,8 @@
         self.selectionStyle = UITableViewCellSelectionStyleNone;
         
         // TODO - use Auto Layout to adjust sizes
-        /*
-         UIImage *image=[UIImage imageNamed:@"黑色按钮.png"];
-         self.stateImage=image;
-         self.stateImageView=[[UIImageView alloc] initWithFrame:CGRectMake(270.0,7.0, 25, 25)];
-         [self.stateImageView setImage:self.stateImage];
+         self.stateImageView = [[UIImageView alloc] initWithFrame:CGRectMake(270.0,7.0, 25, 25)];
          [self.contentView addSubview:self.self.stateImageView];
-         */
     }
     return self;
 }

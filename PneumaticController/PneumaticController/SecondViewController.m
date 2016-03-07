@@ -11,6 +11,7 @@
 #import "JTSImageInfo.h"
 #import "JTSImageViewController.h"
 #import "AppDelegate.h"
+#import "SetHostIPViewController.h"
 #import <ImageIO/ImageIO.h>
 
 @interface SecondViewController ()
@@ -49,6 +50,7 @@
     [refreshBtn addGestureRecognizer:tapGesture];
     self.button = refreshBtn;
     [self.view addSubview:refreshBtn];
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -94,13 +96,14 @@
             self.button.hidden = YES;
             self.photoImage.image = self.defaultImage;
             NSString *ip = [[NSUserDefaults standardUserDefaults] valueForKey: @"ip"];
+            NSString *port = [[NSUserDefaults standardUserDefaults] valueForKey: @"port"];
             
             if (self.socker == nil && ip.length > 0) {
                 self.socker = [[XTSSocketController alloc] init];
                 self.socker.flag = 1;
                 self.socker.errorDelegate = self;
                 self.socker.dataDelegate = self;
-                [self.socker initNetworkCommunication: nil hostIP: ip];
+                [self.socker initNetworkCommunication:nil hostIP:ip port:port];
                 NSDictionary *dataPack = [self.socker packSendData: nil WithMode: XTSDataPhotoMode];
                 if (![self.socker sendDataWithMode: XTSDataPhotoMode dataPack: dataPack]) {
                     NSLog(@"upload failed!");
@@ -145,7 +148,7 @@
 
 #pragma mark - StreamEventErrorOccurred Delegate
 
--(void)streamEventErrorOccurredAction:(NSError *)error type:(NSString *)type{
+-(void)streamEventErrorOccurredAction:(NSError *)error type:(NSString *)type {
     if ([type isEqualToString:@"NetEventConnectOverTime"]) {
         UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"连接服务器超时" message:@"请检查你的网络和服务器ip" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
@@ -158,14 +161,13 @@
         }];
         
     }
-    self.button.hidden = NO;
 }
 
--(void)streamEventOpenSucces{
+-(void)streamEventOpenSucces {
     NSLog(@"Stream Open Succes！");
 }
 
--(void)streamEventClose{
+-(void)streamEventClose {
     NSLog(@"Stream Close！");
     //[self closeSocket];
     //self.button.hidden = NO;
@@ -184,14 +186,12 @@
             [self closeSocket];
         });
     });
-    
-    self.button.hidden = YES;
 }
 
 #pragma mark - UIColor 转UIImage
 - (UIImage*) createImageWithColor: (UIColor*) color
 {
-    CGRect rect=CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
+    CGRect rect = CGRectMake(0.0f, 0.0f, 1.0f, 1.0f);
     UIGraphicsBeginImageContext(rect.size);
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(context, [color CGColor]);
@@ -207,6 +207,7 @@
     self.socker.errorDelegate = nil;
     self.socker.dataDelegate = nil;
     self.socker = nil;
+    self.button.hidden = NO;
 }
 
 #pragma mark - 拖动按钮

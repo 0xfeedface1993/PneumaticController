@@ -124,6 +124,7 @@
                 }
                 else
                 {
+                    NSLog(@"inputStream not 4 head");
                     [self close];
                     //Error Control
                 }
@@ -142,14 +143,14 @@
                 }else{
                     [self.recverData appendBytes:buffer length:actuallyRead];
                     _remainingToRead -= actuallyRead;
-                    NSLog(@"recve data %s", buffer);
+                    
                 }
                     
                 if(_remainingToRead == 0)
                 {
                     [self.dataDelegate streamDataRecvSuccess:self.recverData];
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^() {
-                        NSLog(@"rev data : %@", self.recverData);
+//                        NSLog(@"rev data : %@", self.recverData);
                     });
                     _isFirstFourBytes = YES;
                     self.recverData = nil;
@@ -179,7 +180,7 @@
                     if ([_outputStream hasSpaceAvailable] == NO) //如果发送缓存已满，暂停0。1秒
                     {
                         NSLog(@"outputStream buffer full!");
-                        [NSThread sleepForTimeInterval:0.1];
+                        //[NSThread sleepForTimeInterval:0.1];
                         continue;
                     }
                     int n = 0;
@@ -258,7 +259,7 @@
     [_inputStream close];
     [_inputStream removeFromRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
     [_inputStream setDelegate:nil];
-    [self.errorDelegate streamEventClose];
+    //[self.errorDelegate streamEventClose];
 }
 
 -(void)open{

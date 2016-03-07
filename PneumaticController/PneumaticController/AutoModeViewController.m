@@ -34,13 +34,13 @@ enum TextFieldType{
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     //self.config=[[managedObjectConfiguration alloc] initWithResource:@"AutoModeTableList"];
-    self.navigationItem.title=@"未连接";
-    self.navigationItem.leftBarButtonItem=[[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone  target:self action:@selector(backModeView)];
-    UIBarButtonItem *itemAdd=[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addSerilSet)];
-    UIBarButtonItem *itemUpload=[[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStyleDone  target:self action:@selector(uploadSet)];
-    NSArray *arry=[[NSArray alloc] initWithObjects:itemAdd,itemUpload, nil];
-    self.navigationItem.rightBarButtonItems=arry;
-    self.navigationItem.title=@"自动模式";
+    self.navigationItem.title = @"未连接";
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"返回" style:UIBarButtonItemStyleDone  target:self action:@selector(backModeView)];
+    UIBarButtonItem *itemAdd = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(addSerilSet)];
+    UIBarButtonItem *itemUpload = [[UIBarButtonItem alloc] initWithTitle:@"上传" style:UIBarButtonItemStyleDone  target:self action:@selector(uploadSet)];
+    NSArray *arry = [[NSArray alloc] initWithObjects:itemAdd,itemUpload, nil];
+    self.navigationItem.rightBarButtonItems = arry;
+    self.navigationItem.title = @"自动模式";
     //self.tableView.rowHeight=50.0;
     [self.tableView setEditing:YES animated:YES];
     //
@@ -48,7 +48,7 @@ enum TextFieldType{
     
     NSError *error;
     if (![[self fetchedResultController] performFetch:&error]) {
-        UIAlertView *alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error loading data",@"Error loading data")
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error loading data",@"Error loading data")
                                                       message:[NSString stringWithFormat:NSLocalizedString(@"Error was:%@, quitting.", @"Error was:%@, quitting."),[error localizedDescription]]
                                                      delegate:self
                                             cancelButtonTitle:NSLocalizedString(@"Aw, Nuts", @"Aw, Nuts")
@@ -68,42 +68,45 @@ enum TextFieldType{
 -(void)backModeView{
     //[self.navigationController popViewControllerAnimated:YES];
     [self.socker close];
-    self.socker=nil;
+    self.socker = nil;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
--(void)addSerilSet{
-    NSString *title=@"添加序列项";
+-(void)addSerilSet {
+    NSString *title = @"添加序列项";
     NSString *message;
     //对话框弹出
-    NSManagedObjectContext *managedObjectContext=[self.fetchedResultController managedObjectContext];
-    NSEntityDescription *entity=[[self.fetchedResultController fetchRequest] entity];
-    NSManagedObject *newModeSet=[NSEntityDescription insertNewObjectForEntityForName:[entity name]
-                                                              inManagedObjectContext:managedObjectContext];
     
-    UIAlertController *alertController=[UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
-    // [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(makeSomeLog:) name:@"GOOD" object:nil];
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title
+                                                                             message:message
+                                                                      preferredStyle:UIAlertControllerStyleAlert];
     
-    UIAlertAction *okAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+    UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                       style:UIAlertActionStyleDefault
+                                                     handler:^(UIAlertAction *action){
+        NSManagedObjectContext *managedObjectContext = [self.fetchedResultController managedObjectContext];
+        NSEntityDescription *entity = [[self.fetchedResultController fetchRequest] entity];
+        NSManagedObject *newModeSet = [NSEntityDescription insertNewObjectForEntityForName:[entity name]
+                                                                    inManagedObjectContext:managedObjectContext];
         int timeStable = 0;
         float pressure = 0.0;
         
         for (UITextField *textField in alertController.textFields) {
-            if (textField.tag==XTSTimeTextField) {
+            if (textField.tag == XTSTimeTextField) {
                 timeStable = textField.text.intValue;
             }
-            if(textField.tag==XTSPressureTextField){
+            if(textField.tag == XTSPressureTextField){
                 pressure = textField.text.intValue;
             }
         }
         
-        int number=[[self.fetchedResultController fetchedObjects] count];
+        int number = (int)[[self.fetchedResultController fetchedObjects] count];
         [newModeSet setValue:[[NSNumber alloc] initWithInt:timeStable] forKey:@"time"];
         [newModeSet setValue:[[NSNumber alloc] initWithFloat:pressure] forKey:@"pressure"];
         [newModeSet setValue:[[NSNumber alloc] initWithInt:number] forKey:@"number"];
         NSError *error;
         if (![newModeSet.managedObjectContext save:&error]) {
-            UIAlertView *alert=[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error saving entity", @"Error saving entity")
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error saving entity", @"Error saving entity")
                                                           message:[NSString stringWithFormat:NSLocalizedString(@"Error was:%@,quitting.", @"Error was:%@,quitting."),[error localizedDescription]]
                                                          delegate:self
                                                 cancelButtonTitle:NSLocalizedString(@"Aw, Nuts", @"Aw, Nuts")
@@ -116,14 +119,17 @@ enum TextFieldType{
     }];
     okAction.enabled = NO;
     
-    UIAlertAction *cancelAction=[UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
         textField.placeholder = @"气压值";
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.tag = XTSPressureTextField;
         textField.delegate = self;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertTextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(alertTextFieldDidChange:)
+                                                     name:UITextFieldTextDidChangeNotification
+                                                   object:nil];
     }];
     
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField){
@@ -131,21 +137,40 @@ enum TextFieldType{
         textField.keyboardType = UIKeyboardTypeDecimalPad;
         textField.tag = XTSTimeTextField;
         textField.delegate = self;
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(alertTextFieldDidChange:) name:UITextFieldTextDidChangeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(alertTextFieldDidChange:)
+                                                     name:UITextFieldTextDidChangeNotification
+                                                   object:nil];
     }];
     
     //添加ok、cancel和输入文本框
     [alertController addAction:okAction];
     [alertController addAction:cancelAction];
     
-    [self presentViewController:alertController animated:YES completion:nil];
+    [self presentViewController:alertController
+                       animated:YES
+                     completion:nil];
 }
 
--(void)uploadSet{
+-(void)uploadSet {
     NSString *ip = [[NSUserDefaults standardUserDefaults] valueForKey:@"ip"];
+    
     if ([[self.fetchedResultController fetchedObjects] count] == 0 || [ip length] == 0) {
+        UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"列表为空"
+                                                                           message:@"请添加列表项"
+                                                                    preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK"
+                                                           style:UIAlertActionStyleDefault
+                                                         handler:^(UIAlertAction *action){
+            [self addSerilSet];
+        }];
+        [alertView addAction:okAction];
+        [[AppDelegate getCurrentVC] presentViewController:alertView
+                                                 animated:YES
+                                               completion:nil];
         return;
     }
+    
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.navigationController.view addSubview:HUD];
     HUD.labelText = @"正在上传";
@@ -154,7 +179,7 @@ enum TextFieldType{
     [self packDataUp];
 }
 
--(void)packDataUp{
+-(void)packDataUp {
     NSArray *modeSets = [self.fetchedResultController fetchedObjects];
     NSMutableArray *array = [[NSMutableArray alloc] init];
     for (NSManagedObject *aModeSet in modeSets) {
@@ -164,9 +189,7 @@ enum TextFieldType{
         NSDictionary *set = [NSDictionary dictionaryWithObjectsAndKeys:time,@"time",number,@"number",pressure,@"pressure", nil];
         [array addObject:set];
     }
-   // NSSortDescriptor *sortDescriptor=[NSSortDescriptor sortDescriptorWithKey:@"number" ascending:YES];
-    //[array sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
-
+    
     if (self.socker == nil) {
         _socker = [[XTSSocketController alloc] init];
     }
@@ -174,17 +197,21 @@ enum TextFieldType{
     _socker.errorDelegate = self;
     _socker.dataDelegate = self;
     NSString *ip = [[NSUserDefaults standardUserDefaults] valueForKey:@"ip"];
-    [_socker initNetworkCommunication:nil hostIP:ip];
-    NSDictionary *dataPack=[self.socker packSendData:modeSets WithMode:XTSDataAutoMode];
+    NSString *port = [[NSUserDefaults standardUserDefaults] valueForKey:@"port"];
+    [_socker initNetworkCommunication:nil hostIP:ip port:port];
+    NSDictionary *dataPack = [self.socker packSendData:modeSets
+                                              WithMode:XTSDataAutoMode];
     
     if (![_socker sendDataWithMode:XTSDataAutoMode dataPack:dataPack]) {
         NSLog(@"upload failed!");
     }
+    
 }
 
 #pragma mark - 输入检查
 
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range
+replacementString:(NSString *)string {
     // allow backspace
     if (range.length > 0 && [string length] == 0) {
         return YES;
@@ -220,29 +247,29 @@ enum TextFieldType{
     if (_fetchedResultController != nil) {
         return _fetchedResultController;
     }
-    NSFetchRequest *fetchReqest=[[NSFetchRequest alloc] init];
-    AppDelegate *appDelegate=(AppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSManagedObjectContext *managedObjectContext=[appDelegate managedObjectContext];
-    NSEntityDescription *entity=[NSEntityDescription entityForName:@"ModeSet" inManagedObjectContext:managedObjectContext];
+    NSFetchRequest *fetchReqest = [[NSFetchRequest alloc] init];
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    NSManagedObjectContext *managedObjectContext = [appDelegate managedObjectContext];
+    NSEntityDescription *entity = [NSEntityDescription entityForName:@"ModeSet" inManagedObjectContext:managedObjectContext];
     
     [fetchReqest setEntity:entity];
     //NSError *error;
     //NSArray *fetchedObjects = [managedObjectContext executeFetchRequest:fetchReqest error:&error];
     [fetchReqest setFetchBatchSize:20];
     
-    NSString *sectionKey=@"number";
+    NSString *sectionKey = @"number";
     
-    NSSortDescriptor *sortDescriptor1=[[NSSortDescriptor alloc] initWithKey:@"number"
+    NSSortDescriptor *sortDescriptor1 = [[NSSortDescriptor alloc] initWithKey:@"number"
                                                                   ascending:YES];
-    NSArray *sortDescriptiors=[[NSArray alloc] initWithObjects:sortDescriptor1, nil];
+    NSArray *sortDescriptiors = [[NSArray alloc] initWithObjects:sortDescriptor1, nil];
     [fetchReqest setSortDescriptors:sortDescriptiors];
     
-    _fetchedResultController=[[NSFetchedResultsController alloc] initWithFetchRequest:fetchReqest
+    _fetchedResultController = [[NSFetchedResultsController alloc] initWithFetchRequest:fetchReqest
                                                                  managedObjectContext:managedObjectContext
                                                                    sectionNameKeyPath:sectionKey
                                                                             cacheName:@"ModeSet"];
     
-    _fetchedResultController.delegate=self;
+    _fetchedResultController.delegate = self;
     //NSError *error = NULL;
     /*if (![_fetchedResultController performFetch:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
@@ -254,7 +281,7 @@ enum TextFieldType{
 #pragma mark - TableView Delegate
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    static NSString *CellIdentifier=@"XTSAutoSetCell";
+    static NSString *CellIdentifier = @"XTSAutoSetCell";
     XTSAutoSetCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
         cell = [[XTSAutoSetCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:CellIdentifier];
