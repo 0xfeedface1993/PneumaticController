@@ -253,8 +253,6 @@ replacementString:(NSString *)string {
     NSEntityDescription *entity = [NSEntityDescription entityForName:@"ModeSet" inManagedObjectContext:managedObjectContext];
     
     [fetchReqest setEntity:entity];
-    //NSError *error;
-    //NSArray *fetchedObjects = [managedObjectContext executeFetchRequest:fetchReqest error:&error];
     [fetchReqest setFetchBatchSize:20];
     
     NSString *sectionKey = @"number";
@@ -270,11 +268,6 @@ replacementString:(NSString *)string {
                                                                             cacheName:@"ModeSet"];
     
     _fetchedResultController.delegate = self;
-    //NSError *error = NULL;
-    /*if (![_fetchedResultController performFetch:&error]) {
-        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
-        abort();
-    }*/
     return _fetchedResultController;
 }
 
@@ -311,7 +304,6 @@ replacementString:(NSString *)string {
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     //#warning Incomplete implementation, return the number of rows
     NSInteger count = [[self.fetchedResultController sections] count];
-    NSLog(@"rows %ld in section %ld",section,count);
     return count;
 }
 
@@ -355,14 +347,13 @@ replacementString:(NSString *)string {
 }
 
 -(BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(nonnull NSIndexPath *)indexPath{
-    if (indexPath.row>=[self.fetchedResultController.fetchedObjects count]) {
+    if (indexPath.row >= [self.fetchedResultController.fetchedObjects count]) {
         return NO;
     }
     return YES;
 }
 
 -(void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)sourceIndexPath toIndexPath:(NSIndexPath *)destinationIndexPath{
-    NSLog(@"\nsourceIndexPath section %ld row %ld,\ndestinationIndexPath section %ld row %ld",(long)sourceIndexPath.section,(long)sourceIndexPath.row,(long)destinationIndexPath.section,(long)destinationIndexPath.row);
     int sourceNumber;
     int destinationNumber;
     int temp;
@@ -377,7 +368,7 @@ replacementString:(NSString *)string {
         
     }
     
-    NSManagedObjectContext *managedContext=self.fetchedResultController.managedObjectContext;
+    NSManagedObjectContext *managedContext = self.fetchedResultController.managedObjectContext;
     
     sourceNumber = [[sourceModeSet valueForKey:@"number"] intValue];
     destinationNumber = [[destinationModeSet valueForKey:@"number"] intValue];
@@ -433,15 +424,12 @@ replacementString:(NSString *)string {
            atIndex:(NSUInteger)sectionIndex
      forChangeType:(NSFetchedResultsChangeType)type
 {
-    //[self.tableView beginUpdates];
-   // NSLog(@"\nsectionIndex %@",sectionIndex);
     switch(type) {
         case NSFetchedResultsChangeInsert:
             [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:sectionIndex inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
             break;
         case NSFetchedResultsChangeDelete:
             [self.tableView deleteRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:sectionIndex inSection:0]] withRowAnimation:UITableViewRowAnimationFade];
-            //[self.tableView deleteSections:[NSIndexSet indexSetWithIndex:indexPath.section] withRowAnimation:UITableViewRowAnimationFade];
             break;
         case NSFetchedResultsChangeUpdate:
             NSLog(@"NSFetchedResultsChangeMove");
@@ -452,35 +440,21 @@ replacementString:(NSString *)string {
         default:
             break;
     }
-    //[self.tableView endUpdates];
 }
-/*
-- (void)controller:(NSFetchedResultsController *)controller
-   didChangeObject:(id)anObject
-       atIndexPath:(NSIndexPath *)indexPath
-     forChangeType:(NSFetchedResultsChangeType)type newIndexPath:(NSIndexPath *)newIndexPath
-{
-    //[self.tableView beginUpdates];
-    //NSLog(@"\natIndexPath %@,\nnewIndexPath %@",indexPath,newIndexPath);
-    
-    //[self.tableView endUpdates];
-}*/
-
 
 #pragma mark - StreamEventErrorOccurred Delegate
 
 -(void)streamEventErrorOccurredAction:(NSError *)error type:(NSString *)type{
-   // NSLog(@"ErrorOccurred :%@ ,type: %@",[error localizedDescription],type);
-    [HUD hide:NO];
+   NSLog(@"ErrorOccurred :%@ ,type: %@",[error localizedDescription],type);
+    
     if ([type isEqualToString:@"NetEventConnectOverTime"]) {
-        UIAlertController *alertView=[UIAlertController alertControllerWithTitle:@"连接服务器超时" message:@"请检查你的网络和服务器ip" preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction *okAction=[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
-            //[self.refreshControl endRefreshing];
+        UIAlertController *alertView = [UIAlertController alertControllerWithTitle:@"连接服务器超时" message:@"请检查你的网络和服务器ip" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action){
+            [HUD hide:NO];
         }];
         [alertView addAction:okAction];
         [self presentViewController:alertView animated:YES completion:nil];
     }
-    //[self.refreshControl endRefreshing];
 }
 
 -(void)streamEventOpenSucces{
@@ -488,18 +462,17 @@ replacementString:(NSString *)string {
 }
 
 -(void)streamEventClose{
-    [HUD hide:NO];
     NSLog(@"Stream Close！");
-    //[self.refreshControl endRefreshing];
 }
 
 #pragma mark - StreamEventDataProcess Delegate
 
 -(void)streamDataRecvSuccess:(NSData *)data{
-    [HUD hide:NO];
+    [HUD hide:YES];
     //NSError *error_check_json;
     //NSDictionary *revData=[NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&error_check_json];
     //NSDictionary *state=[revData objectForKey:@"state"];
     //NSManagedObject *object=[[self.fetchedResultController fetchedObjects] lastObject];
 }
+
 @end
