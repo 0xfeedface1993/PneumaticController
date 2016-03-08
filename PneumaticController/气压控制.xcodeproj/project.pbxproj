@@ -46,6 +46,7 @@
 		27FE65DD1C0FE7F1003EC968 /* AutoModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FE65DC1C0FE7F1003EC968 /* AutoModeViewController.m */; };
 		27FE65DF1C0FE90E003EC968 /* AutoModeTableList.plist in Resources */ = {isa = PBXBuildFile; fileRef = 27FE65DE1C0FE90E003EC968 /* AutoModeTableList.plist */; };
 		27FE65E21C0FF308003EC968 /* XTSAutoSetCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FE65E11C0FF308003EC968 /* XTSAutoSetCell.m */; };
+		6B3F95581C8E6B7100EBF6D0 /* NSStreamAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B3F95571C8E6B7100EBF6D0 /* NSStreamAdditions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		6BA9977A1C8D7BA3007174F1 /* SetHostIPViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BA997791C8D7BA3007174F1 /* SetHostIPViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -111,6 +112,8 @@
 		27FE65DE1C0FE90E003EC968 /* AutoModeTableList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = AutoModeTableList.plist; sourceTree = "<group>"; };
 		27FE65E01C0FF308003EC968 /* XTSAutoSetCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = XTSAutoSetCell.h; sourceTree = "<group>"; };
 		27FE65E11C0FF308003EC968 /* XTSAutoSetCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = XTSAutoSetCell.m; sourceTree = "<group>"; };
+		6B3F95561C8E6B7100EBF6D0 /* NSStreamAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSStreamAdditions.h; sourceTree = "<group>"; };
+		6B3F95571C8E6B7100EBF6D0 /* NSStreamAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NSStreamAdditions.m; sourceTree = "<group>"; };
 		6BA997781C8D7BA3007174F1 /* SetHostIPViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetHostIPViewController.h; sourceTree = "<group>"; };
 		6BA997791C8D7BA3007174F1 /* SetHostIPViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetHostIPViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -286,6 +289,8 @@
 				27EBBBA31BF616950029C097 /* XTSSocketController.m */,
 				27ADA3241BFED1180019B430 /* XTSHTTPController.h */,
 				27ADA3251BFED1180019B430 /* XTSHTTPController.m */,
+				6B3F95561C8E6B7100EBF6D0 /* NSStreamAdditions.h */,
+				6B3F95571C8E6B7100EBF6D0 /* NSStreamAdditions.m */,
 			);
 			name = webservice;
 			sourceTree = "<group>";
@@ -402,6 +407,7 @@
 				27EE94721C771C1500DD9EB2 /* UIApplication+JTSImageViewController.m in Sources */,
 				27F5A60F1C05A8D200BD4C61 /* XTSInfoCell.m in Sources */,
 				27FE65E21C0FF308003EC968 /* XTSAutoSetCell.m in Sources */,
+				6B3F95581C8E6B7100EBF6D0 /* NSStreamAdditions.m in Sources */,
 				27EE94701C771C1500DD9EB2 /* JTSImageViewController.m in Sources */,
 				27EBBBA41BF616950029C097 /* XTSSocketController.m in Sources */,
 				271737F61C1EE67100DE5CB4 /* Recive.m in Sources */,

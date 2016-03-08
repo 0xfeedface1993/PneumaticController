@@ -286,7 +286,9 @@ typedef NS_ENUM(NSInteger, TexTFieldType) {
     [alertController addAction:okAction];
     okAction.enabled = NO;
     
-    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler: ^(UIAlertAction *action) {
+        self.isPopAlert = YES;
+    }];
     [alertController addAction:cancelAction];
 
     //添加ok、cancel和输入文本框
@@ -317,9 +319,7 @@ typedef NS_ENUM(NSInteger, TexTFieldType) {
                                                    object:nil];
     }];
     self.isPopAlert = NO;
-    [self presentViewController:alertController animated:YES completion: ^(){
-        self.isPopAlert = YES;
-    }];
+    [self presentViewController:alertController animated:YES completion: nil];
     
 }
 

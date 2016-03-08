@@ -7,31 +7,33 @@
 //
 
 #import "XTSSocketController.h"
+#import "NSStreamAdditions.h"
+
+const int MaxSend = 32 * 1024;
 
 @interface XTSSocketController()
-@property(nonatomic,assign)BOOL ConnectOverTimer;
-@property(nonatomic,assign)double delayTime;
-@property(nonatomic,assign)BOOL isFirstFourBytes;
-@property(nonatomic,assign)UInt32 remainingToRead;
+@property (nonatomic, assign) BOOL ConnectOverTimer;
+@property (nonatomic, assign) double delayTime;
+@property (nonatomic, assign) BOOL isFirstFourBytes;
+@property (nonatomic, assign) UInt32 remainingToRead;
+@property (nonatomic, strong) NSString *hostIP;
+@property (nonatomic, strong) NSString *port;
 @end
-
-
 
 @implementation XTSSocketController
 
 -(void)initNetworkCommunication:(NSDictionary *)data hostIP:(NSString * )hostIP port:(NSString *)port {
-    self.Host_IP = hostIP;
+    self.hostIP = hostIP;
+    self.port = port;
     
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;
 
-    CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)self.Host_IP, (UInt32)port.integerValue,&readStream, &writeStream);
+    CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)self.hostIP, (UInt32)port.integerValue,&readStream, &writeStream);
     
     
     _inputStream = (__bridge_transfer NSInputStream *)readStream;
     _outputStream = (__bridge_transfer NSOutputStream *)writeStream;
-    
-    //NSStrea
     
     [_inputStream setDelegate:self];
     [_outputStream setDelegate:self];
@@ -46,6 +48,43 @@
     self.flag = RECV;
     [self performSelector:@selector(checkConnectOverTime) withObject:nil afterDelay:_delayTime];
 }
+
+//打开网络流,连接服务器,需要在主线程中连接,
+- (BOOL)openStream
+{
+    if (_inputStream != nil) {
+        return YES;
+    }
+    
+//    [NSStreamAdditions getStreamsToHostNamed:self.hostIP
+//                                        port:self.port
+//                                 inputStream:&inputStream
+//                                outputStream:&outputStream];
+    
+    [_inputStream setDelegate:self];//设置代理，表示回调部分在delegate类里找
+    [_outputStream setDelegate:self];
+    
+    [_inputStream scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                           forMode:NSDefaultRunLoopMode];
+    [_outputStream scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                            forMode:NSDefaultRunLoopMode];
+    
+    [_inputStream open];
+    [_outputStream open];
+    
+    //设置状态
+    //第一次收到可以向缓存发送数据事件
+    _isFirstFourBytes = YES;
+    _delayTime = 5.0;
+    _flag = RECV;
+
+    //是否连接超时，连接后，设置个延时函数即可，可以发送数据后，取消延时的函数(对于那种连接后，没有回数据断开的，也可以在收到数据在取消延时)，如果系统又设置超时的函数更好。
+    _ConnectOverTimer = YES;
+    [self performSelector:@selector(checkConnectOverTime) withObject:nil afterDelay:_delayTime];
+    
+    return YES;
+}
+
 /*
 - (void)SetDelayOverTime:(double)connectTime
 {
@@ -84,7 +123,6 @@
         NSLog(@"send data: %@", allData);
         self.sendData = allData;
         self.flag = SEND;
-        
         return YES;
     }
     
@@ -119,7 +157,8 @@
                 if([_inputStream read:bufferLen maxLength:4] == 4)
                 {
                     NSLog(@"4 bytes: %x %x %x %x",bufferLen[0],bufferLen[1],bufferLen[2],bufferLen[3]);
-                    _remainingToRead = ((bufferLen[3]<<24)&0xff000000)+((bufferLen[2]<<16)&0xff0000)+((bufferLen[1]<<8)&0xff00)+(bufferLen[0] & 0xff);
+                    //将四个字节大小端转换
+                    _remainingToRead = ((bufferLen[3] << 24) & 0xff000000) + ((bufferLen[2] << 16) & 0xff0000) + ((bufferLen[1] << 8) & 0xff00) + (bufferLen[0] & 0xff);
                     _isFirstFourBytes = NO;
                 }
                 else
@@ -133,14 +172,15 @@
                 if (self.recverData == nil) {
                     self.recverData = [[NSMutableData alloc] init];
                 }
-                int actuallyRead;
-                actuallyRead = (int)[_inputStream read:buffer maxLength:sizeof(buffer)];
+                
+                int actuallyRead = (int)[_inputStream read:buffer maxLength:sizeof(buffer)];
+                
                 if(actuallyRead == -1){
                     [self close];
                     //Error Control
-                }else if(actuallyRead == 0){
+                }   else if(actuallyRead == 0)  {
                     //Do something if you want
-                }else{
+                }   else    {
                     [self.recverData appendBytes:buffer length:actuallyRead];
                     _remainingToRead -= actuallyRead;
                     
@@ -150,7 +190,7 @@
                 {
                     [self.dataDelegate streamDataRecvSuccess:self.recverData];
                     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^() {
-//                        NSLog(@"rev data : %@", self.recverData);
+                        NSLog(@"raw data : %@", self.recverData);
                     });
                     _isFirstFourBytes = YES;
                     self.recverData = nil;
@@ -158,35 +198,25 @@
             }
             
         case NSStreamEventHasSpaceAvailable:
-            event=@"NSStreamEventHasSpaceAvailable";
-            /*
-            if (_flag==SEND&&aStream==_outputStream&&_sendData!=nil) {
-                NSUInteger bytesLength=[self.sendData length];
-                uint8_t *buffer=malloc(bytesLength);
-                [_outputStream write:[self.sendData bytes] maxLength:bytesLength];
-                [_outputStream close];
-                free(buffer);
-            }
-             */
+            event = @"NSStreamEventHasSpaceAvailable";
+            
             [self canclCheckConnectOverTimer];
             
             if (self.flag == SEND) {
-                //uint8_t *sendbuf;
                 NSInteger left = [self.sendData length];
                 int count = 0;
-                const int MaxSend = 32*1024;
                 while(left > 0)
                 {
                     if ([_outputStream hasSpaceAvailable] == NO) //如果发送缓存已满，暂停0。1秒
                     {
                         NSLog(@"outputStream buffer full!");
-                        //[NSThread sleepForTimeInterval:0.1];
+                        [NSThread sleepForTimeInterval:0.1];
                         continue;
                     }
                     int n = 0;
                     //每次32kb的发送，不足32kb，全部发送
                     
-                    if (left<MaxSend)
+                    if (left < MaxSend)
                     {
                         n = (int)[_outputStream write:[self.sendData bytes] maxLength:left];
                     }
@@ -203,19 +233,22 @@
                     count += n;
                     left -= n;
                 }
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^() {
+                    NSLog(@"send operation is complete！");
+                });
                 self.flag = RECV;
             }
             
             break;
             
         case NSStreamEventErrorOccurred:
-            event=@"NSStreamEventErrorOccurred";
+            event = @"NSStreamEventErrorOccurred";
             [_errorDelegate streamEventErrorOccurredAction:[aStream streamError]  type:event];
             [self close];
             break;
             
         case NSStreamEventEndEncountered:
-            event=@"NSStreamEventEndEncountered";
+            event = @"NSStreamEventEndEncountered";
             //[_errorDelegate streamEventErrorOccurredAction:[aStream streamError]  type:event];
             [self close];
             break;
@@ -248,7 +281,9 @@
 - (void)canclCheckConnectOverTimer
 {
     _ConnectOverTimer = NO;
-    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(checkConnectOverTime) object:nil];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(checkConnectOverTime)
+                                               object:nil];
 }
 
 -(void)close{
@@ -308,3 +343,4 @@
 }
 
 @end
+

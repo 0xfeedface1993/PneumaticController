@@ -45,7 +45,6 @@ typedef NS_ENUM(NSInteger,XTSDataMode){
 @property (weak, nonatomic) id<XTSSocketControllerStreamEventDataProcessDelegate> dataDelegate;
 @property (strong, nonatomic) NSInputStream *inputStream;
 @property (strong, nonatomic) NSOutputStream *outputStream;
-@property (strong, nonatomic) NSString *  Host_IP;
 @property (strong, nonatomic) NSMutableData *recverData;
 @property (strong, nonatomic) NSMutableData *sendData;
 
@@ -58,7 +57,6 @@ typedef NS_ENUM(NSInteger,XTSDataMode){
 -(void)close;
 -(void)open;
 
-
-
 @end
+
 
