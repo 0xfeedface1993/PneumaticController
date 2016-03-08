@@ -22,7 +22,7 @@
     
     assert(hostName != nil);
     assert( (port > 0) && (port <65536) );
-    assert( (inputStreamPtr != NULL) ||(outputStreamPtr != NULL) );
+    assert( (inputStreamPtr != NULL) || (outputStreamPtr != NULL) );
     
     readStream = NULL;
     writeStream = NULL;
@@ -30,7 +30,7 @@
     CFStreamCreatePairWithSocketToHost(
                                        NULL,
                                        (__bridge CFStringRef) hostName,
-                                       port,
+                                       (int)port,
                                        ((inputStreamPtr  != nil) ?&readStream : NULL),
                                        ((outputStreamPtr != nil) ? &writeStream : NULL)
                                        );

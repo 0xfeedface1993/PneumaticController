@@ -9,7 +9,6 @@
 #import "StateMonitorTableViewController.h"
 #import "managedObjectConfiguration.h"
 #import "XTSStateCell.h"
-#import "SetHostIPViewController.h"
 #import "AppDelegate.h"
 
 

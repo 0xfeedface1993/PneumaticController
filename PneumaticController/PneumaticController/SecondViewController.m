@@ -11,7 +11,6 @@
 #import "JTSImageInfo.h"
 #import "JTSImageViewController.h"
 #import "AppDelegate.h"
-#import "SetHostIPViewController.h"
 #import <ImageIO/ImageIO.h>
 
 @interface SecondViewController ()
